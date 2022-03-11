@@ -1,0 +1,101 @@
+
+html,
+body {
+  height: 100%;
+}
+
+body{
+    min-height: 100%;
+}
+
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+  }
+
+/* Header */
+
+
+/* Main */
+/* Signin */
+.form-signin {
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
+  }
+  
+  .form-signin .checkbox {
+    font-weight: 400;
+  }
+  
+  .form-signin .form-floating:focus-within {
+    z-index: 2;
+  }
+  
+  .form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  
+  .form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
+  .belowformlink{
+      display: inline;
+  }
+
+  /* profile */
+.profilealign{
+    text-align: left;
+}
+
+.profileborder{
+    border-bottom-color: transparent;
+}
+
+/* About Us */
+.aboutus{
+  text-align: left;
+  justify-items: left;
+}
+
+/* Books */
+.card{
+  margin: 1em 3em 1em 3.5em;
+  padding: 0;
+}
+
+.viewbook{
+  padding: 1em;
+  margin: 1em;
+}
+
+.addbook{
+  margin: 2em auto;
+}
+
+/* Footer */
+
+.container {
+    width: auto;
+    padding: 0 15px;
+    text-align: center;
+}
+
+
+/* Media */
+@media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+      font-size: 3.5rem;
+    }
+
+}
+

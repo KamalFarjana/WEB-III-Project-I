@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="Assets/bootstrap.css">
+    <link rel="stylesheet" href="Assets/style.css">
+
+    <title>Remove Book | Book Xchange</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">Book Xchange</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="aboutus.html">About Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="browse.html">Browse Books</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="addbook.html">Add Book</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="faq.html">FAQ</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contactus.html">Contact Us</a>
+            </li>
+          </ul>
+
+          <ul class="navbar-nav navbar-right">
+            <li><a class="nav-link">Last Login <b>March 31, 2021</b>.</a></li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false">dwarfplanet</a>
+                <ul class="dropdown-menu" aria-labelledby="dropdown04">
+                    <li><a class="dropdown-item" href="myprofile.html">My Profile</a></li>
+                    <li><a class="dropdown-item" href="myinventory.html">My Inventory</a></li>
+                    <li><a class="dropdown-item" href="index.html">Sign Out</a></li>
+                </ul>
+            </li>
+      </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main class="flex-shrink-0">
+      <div class="container py-4 container-fluid">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2">1984</h1>
+        </div>
+        
+        <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-3 viewbook">
+          <img src="Images/book-cover.jpg" class="card-img-top" alt="book1"/>
+        </div>
+        <div class="card col-xs-12 col-sm-6 col-md-8 viewbook align-items-start">
+              <h5 class="card-title">Book Details</h5>
+              <p class="card-text"><b>Title</b>: 1984</p>
+              <p class="card-text"><b>Author</b>: George Orwell</p>
+              <p class="card-text"><b>ISBN</b>: 9780141391700</p>
+              <p class="card-text"><b>Genre</b>: Fiction</p>
+              <p class="card-text"><b>Condition</b>：New</p>
+              <hr>
+              <h5 class="card-title">Borrower Information</h5>
+              <form class="form-horizontal">
+                <table class="table table-sm profileborder">
+                  <tr>
+                    <td><label class="col-sm-12 control-label" style="text-align: left;">Username</label></td>
+                    <td><input type="text" class="form-control" placeholder="borrower's username"></td>
+                  </tr>
+                <tr>  
+                  <td><label class="col-sm-12 control-label" for="rateUser" style="text-align: left;">Rate User</label></td>
+                  <td>
+                    <select class="form-control" id="rateUser">
+                      <option>5</option>
+                      <option>4</option>
+                      <option>3</option>
+                      <option>2</option>
+                      <option>1</option>
+                    </select>
+                  </td>
+                </tr>
+                
+              </table>
+              </form>
+              <p style="display: inline;">
+              <a href="myinventory.html"><img src="Images/remove.png" alt="removeButton" style="width:200px;height:60px;"></a>
+              <a href="myinventory.html"><img src="Images/cancel.png" alt="cancelButton" style="width:200px;height:60px;"></a></p>
+        </div>
+      </div>
+
+      </div>
+      </main>
+
+      <footer class="footer bg-dark mt-auto py-3 bg-light">
+        <div class="container">
+            <p class="text-light">copyright © 2021 bookxchange.ca</p>
+        </div>
+    </footer>
+    <script src="Assets/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="Assets/bootstrap.css">
+    <link rel="stylesheet" href="Assets/style.css">
+
+    <title>Browse Books | Book Xchange</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">Book Xchange</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="aboutus.html">About Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="browse.html">Browse Books</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="addbook.html">Add Book</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="faq.html">FAQ</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contactus.html">Contact Us</a>
+            </li>
+          </ul>
+
+          <ul class="navbar-nav navbar-right">
+                <li><a class="nav-link">Last Login <b>March 31, 2021</b>.</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false">dwarfplanet</a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdown04">
+                        <li><a class="dropdown-item" href="myprofile.html">My Profile</a></li>
+                        <li><a class="dropdown-item" href="myinventory.html">My Inventory</a></li>
+                        <li><a class="dropdown-item" href="index.html">Sign Out</a></li>
+                    </ul>
+                </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+      <main class="flex-shrink-0">
+      <div class="container py-4 container-fluid">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Browse Books</h1>
+        </div>
+
+        <div class="row">
+          <div class="card col-xs-12 col-sm-6 col-md-3">
+            
+            <table>
+              <tr>
+                <th>Search by</th><br>
+              </tr>
+              <tr>
+                <td><br>
+                  <input type="radio" id="Title" value="Title">
+              <label for="Title">Title</label><br>
+              <input type="radio" id="Author" value="Author">
+              <label for="Author">Author</label><br>
+              <input type="radio" id="ISBN" value="ISBN">
+              <label for="ISBN">ISBN</label>
+                </td>
+              </tr>
+              <tr>
+                <td><div class="search-container">
+                  <input type="text" placeholder="Search.." name="search">
+                  <input type="submit" value="Submit"> </div>
+                </td>
+              </tr>
+              <tr>
+                <th><br><hr><br>Filter by</th>
+              </tr>
+            </table><br>
+            <form>
+            <table>
+              <tr>
+              <label for="genre">Genre</label>
+              <select name="genre" id="genre">
+                <option value="volvo">Fiction</option>
+                <option value="saab">Non-Fiction</option>
+                <option value="opel">Philosophy</option>
+                <option value="audi">Historical</option>
+              </select>
+                <input type="submit" value="Submit">
+              </tr>
+            </table>
+          </form>
+          </div>
+          <div class="card col-xs-12 col-sm-6 col-md-3">
+            <img src="Images/book-cover.jpg" class="card-img-top" alt="1984"/>
+            <div class="card-body">
+              <h5 class="card-title">1984</h5>
+              <p class="card-text">George Orwell</p>
+            </div>
+            <div class="card-body">
+              <a href="viewbook.html" class="card-link">View Book</a>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">Posted by <a href="myprofile.html">dwarfplanet</a><br>Posted on March 31, 2021</small>
+            </div>
+          </div>
+          <div class="card col-xs-12 col-sm-6 col-md-3">
+            <img src="Images/book-cover-2.jpg" class="card-img-top" alt="Unfu*k Yourself"/>
+            <div class="card-body">
+              <h5 class="card-title">Unfu*k Yourself</h5>
+              <p class="card-text">Gary John Bishop</p>
+            </div>
+            <div class="card-body">
+              <a href="#" class="card-link">View Book</a>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">Posted by <a href="#">user</a><br>Posted on March 28, 2021</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="card col-xs-12 col-sm-6 col-md-3">
+            <img src="Images/book-cover-3.jpg" class="card-img-top" alt="The Wolf of Wall Street"/>
+            <div class="card-body">
+              <h5 class="card-title">The Wolf of Wall Street</h5>
+              <p class="card-text">Jordan Belfort</p>
+            </div>
+            <div class="card-body">
+              <a href="#" class="card-link">View Book</a>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">Posted by <a href="myprofile.html">dwarfplanet</a><br>Posted on March 21, 2021</small>
+            </div>
+          </div>
+          <div class="card col-xs-12 col-sm-6 col-md-3">
+            <img src="Images/book-cover-4.jpg" class="card-img-top" alt="Fifty Shades of Grey"/>
+            <div class="card-body">
+              <h5 class="card-title">Fifty Shades of Grey</h5>
+              <p class="card-text">E. L. James</p>
+            </div>
+            <div class="card-body">
+              <a href="#" class="card-link">View Book</a>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">Posted by <a href="myprofile.html">user</a><br>Posted on March 16, 2021</small>
+            </div>
+          </div>
+          <div class="card col-xs-12 col-sm-6 col-md-3">
+            <img src="Images/book-cover-5.jpg" class="card-img-top" alt="A Storm of Swords"/>
+            <div class="card-body">
+              <h5 class="card-title">A Storm of Swords</h5>
+              <p class="card-text">George R. R. Martin</p>
+            </div>
+            <div class="card-body">
+              <a href="#" class="card-link">View Book</a>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">Posted by <a href="#">user</a><br>Posted on March 13, 2021</small>
+            </div>
+          </div>
+        </div>
+
+        </div>
+      </main>
+
+      <footer class="footer bg-dark mt-auto py-3 bg-light">
+        <div class="container">
+            <p class="text-light">copyright © 2021 bookxchange.ca</p>
+        </div>
+    </footer>
+    <script src="Assets/bootstrap.bundle.min.js"></script>
+</body>
+</html>
