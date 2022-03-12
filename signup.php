@@ -1,3 +1,89 @@
+<?php
+include("connect.php");
+include("function.php");
+$error="";
+$success_msg="";
+if(isset($_POST['Submit'])){
+      #variable_initialization
+      $FirstName=$_POST['FirstName'];
+      $LastName=$_POST['LastName'];
+      $email=$_POST['Email'];
+      $username=$_POST['UserName'];
+      $password=$_POST['Password'];
+      $passwordConfirm=$_POST['Conpassword'];
+      $Address=$_POST['Address'];
+      $PostCode=$_POST['Postal'];
+      $Phonenumber=$_POST['PhoneNumber'];
+      #$date=date("F, d Y");
+      $image=$_FILES['Image']['name'];
+      $tmp_image=$_FILES['Image']['tmp_name'];
+      $extension_verification = pathinfo($image,PATHINFO_EXTENSION);
+      #$imagesize=$_FILES['Image']['size'];
+      #User name Validation
+      if(strlen($FirstName)<3||strlen($LastName)<3)
+      {
+        $error= "First name or Last name is too short";
+      }
+      #User Email Validation and Verification
+      elseif(!filter_var($email, FILTER_VALIDATE_EMAIL))
+      {
+        $error="$email is not a valid email address";
+      }
+      #geting_email_address_from_DB
+      elseif(email_exists($email,$connection)>0)
+      {
+        $error="Email address is already exists!";
+      }
+      #Validate the username
+      elseif( username_exists($username,$connection)>0)
+      {
+        $error="Username is already exists!";
+      }
+      #User password Validation and Verification
+      elseif(strlen($password)<7)
+      {
+        $error="Password must be more than 7 characters!!!";
+      }
+      elseif($password!=$passwordConfirm){
+        $error="Passwords doesnot match!!!";
+      }
+      elseif(strlen($PostCode)<6 ||strlen($PostCode)>6 )
+      {
+        $error="Postal code should be 6 characters/numbers";
+      }
+      /*elseif($imagesize>1048576)
+      {
+        $error="Image size should not be more than 1MB!";
+      }*/
+      #image type validation
+      else
+      {
+        #hashing the password
+        $Hashed_password=md5($password);
+        #unique image name
+        $unique_image_name=$email.time().".".$extension_verification;
+        #Query to insert the user data into the DataBase
+        $insertQuery = "INSERT INTO registereduser(UserName,FirstName,LastName,email,PhoneNumber,Address,PostalCode,Image,Password) VALUES ( '$username','$FirstName','$LastName','$email','$Phonenumber','$Address','$PostCode','$unique_image_name','$Hashed_password')";
+        if(mysqli_query($connection, $insertQuery))
+          {
+          if(move_uploaded_file($tmp_image,"Images/$image")){
+                rename("Images/$image", "Images/$unique_image_name");
+                $success_msg="You are successfully registered";
+                  #header("location: signin.php");
+          }
+          }
+        else
+          {
+            $error="The attempt was unsuccessful.";
+          }
+      }
+
+      }
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,42 +123,83 @@
 
           </ul>
           <ul class="nav-item navbar-nav navbar-right">
-            <li><a class="nav-link" href="signin.html">Sign In</a></li>
-            <li></li>
+            <li><a class="nav-link active" href="signup.php">Register</a></li>
+            <li><a class="nav-link active" href="signin.php">Sign In</a></li>
           </ul>
         </div>
       </div>
     </nav>
-
-    <main class="form-signin text-center">
-        <form>
+    <main class="form-signin text-center" style="width: 50%;">
+      <?php
+          if(strlen($error)>0){ ?>
+            <div id="error"> <?php echo $error ?>  </div>
+      <?php } else {?>
+            <div id="success"> <?php echo $success_msg ?>  </div>
+      <?php } ?>
+        <form method="post" action="signup.php" enctype="multipart/form-data" style="max-width: 800px;">
           <img class="mb-4" src="Images/swap.png" alt="" width="72" height="72">
           <h1 class="h3 mb-3 fw-normal">Sign up here</h1>
-          
-          <div class="form-floating">
-            <input type="text" class="form-control" id="floatingInput" placeholder="username">
-            <label for="floatingInput">Username</label>
-            <p class="help-block">Note: letters or numbers, without spaces</p>
-          </div>
-          <div class="form-floating">
-            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-            <label for="floatingInput">Email address</label>
-          </div><br>
-          <div class="form-floating">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-            <label for="floatingPassword">Password</label>
-          </div>
-          <div class="form-floating">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Confirm Password">
-            <label for="floatingPassword">Confirm password</label>
-          </div>
+          <div class="row">
+              <div class="col-md-6">
+                <div class="form-floating">
+                  <input type="text" class="form-control" id="floatingInput" placeholder="fName" name="FirstName">
+                  <label for="floatingInput">First Name</label>
+                </div><br>
 
+                <div class="form-floating">
+                  <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"  name="Email">
+                  <label for="floatingInput">Email address</label>
+                </div>
+                <br>
+
+                <div class="form-floating">
+                  <input type="password" class="form-control" id="floatingPassword" placeholder="Password"  name="Password">
+                  <label for="floatingPassword">Password</label>
+                </div>
+                <br>
+                <div class="form-floating">
+                  <input type="text" class="form-control" id="floatingInput" placeholder="Address Line"  name="Address">
+                  <label for="floatingInput">Address</label>
+                </div>
+                <br>
+                <div class="form-floating">
+                  <input type="text" class="form-control" id="floatingInput" placeholder="Phone Number" name="PhoneNumber">
+                  <label for="floatingInput">Phone Number</label>
+                </div><br>
+              </div>
+
+              <div class="col-md-6">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="LName" name="LastName">
+                    <label for="floatingInput">Last Name</label>
+                  </div><br>
+                  <div class="form-floating">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="username"  name="UserName">
+                    <label for="floatingInput">Username</label>
+                  </div>
+                  <br>
+                  <div class="form-floating">
+                    <input type="password" class="form-control" id="floatingPassword" placeholder="Confirm Password" name="Conpassword">
+                    <label for="floatingPassword">Confirm password</label>
+                  </div>
+                  <br>
+                  <div class="form-floating">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="Postal Code" name="Postal">
+                    <label for="floatingInput">Postal Code</label>
+                  </div><br>
+
+                  <div class="form-floating">
+                    <input type="file" class="form-control" id="floatingInput" placeholder="Browse Image" name="Image">
+                    <label for="floatingInput">Image</label>
+                  </div><br>
+              </div>
+        </div>
           <!-- <button class="w-100 btn btn-lg btn-primary" type="submit" >Sign in</button> -->
-          <a href="querysucess.html"><img src="Images/signup.png" alt="SignUpButton" style="width:200px;height:60px;"></a>
-
+          <!--<a href="signin.php" name="Submit"><img src="Images/signup.png" alt="SignUpButton" style="width:200px;height:50px;"></a> -->
+        <input type="submit" name="Submit" style="background: url('Images/signup.png'); border:none; background-repeat:no-repeat; width:200px;height:50px;" value="Sign Up" /><br/>
           <div class="nav-item navbar-nav">
           <p class="mt-5 mb-3">Already registered?
-              <a class="nav-link belowformlink" href="signin.html">Sign In</a>
+              <a class="nav-link belowformlink" href="signin.php">Sign In</a>
 
           </div>
         </form>
