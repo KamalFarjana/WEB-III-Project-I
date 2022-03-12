@@ -21,18 +21,25 @@ body{
 
 /* Main */
 /* Signin */
+
 .form-signin {
     margin:auto;
+    max-width:350px;
+    width:100%
   }
-    .form-signin .checkbox {
+.signupform{
+    width: 50%;
+    margin:auto;
+  }
+.form-signin .checkbox {
       font-weight: 400;
     }
 
-  .form-signin .form-floating:focus-within {
+.form-signin .form-floating:focus-within {
     z-index: 2;
   }
 
-  .form-signin input[type="email"] {
+.form-signin input[type="email"] {
     margin-bottom: -1px;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;

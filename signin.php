@@ -72,12 +72,12 @@ if(isset($_POST['Submit'])){
     </nav>
 
     <main class="form-signin text-center" style="width: 20%;">
-      <?php
-          if(strlen($error)>0){ ?>
-            <div id="error"> <?php echo $error ?>  </div>
-      <?php } else {?>
-            <div id="success"> <?php echo $success_msg ?>  </div>
-      <?php } ?>
+        <?php
+            if(strlen($error)>0){ ?>
+              <div id="error"> <?php echo $error ?>  </div>
+        <?php } else {?>
+              <div id="success"> <?php echo $success_msg ?>  </div>
+        <?php } ?>
       <form method="post" action="signin.php" enctype="multipart/form-data" style="max-width:350px; ">
           <img class="mb-4" src="Images/swap.png" alt="" width="72" height="72">
           <h1 class="h3 mb-3 fw-normal">Sign in here</h1>

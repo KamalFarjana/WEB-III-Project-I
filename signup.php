@@ -129,13 +129,13 @@ if(isset($_POST['Submit'])){
         </div>
       </div>
     </nav>
-    <main class="form-signin text-center" style="width: 50%;">
-      <?php
-          if(strlen($error)>0){ ?>
-            <div id="error"> <?php echo $error ?>  </div>
-      <?php } else {?>
-            <div id="success"> <?php echo $success_msg ?>  </div>
-      <?php } ?>
+    <main class="signupform text-center">
+        <?php
+            if(strlen($error)>0){ ?>
+              <div id="error"> <?php echo $error ?>  </div>
+        <?php } else {?>
+              <div id="success"> <?php echo $success_msg ?></div>
+        <?php } ?>
         <form method="post" action="signup.php" enctype="multipart/form-data" style="max-width: 800px;">
           <img class="mb-4" src="Images/swap.png" alt="" width="72" height="72">
           <h1 class="h3 mb-3 fw-normal">Sign up here</h1>
