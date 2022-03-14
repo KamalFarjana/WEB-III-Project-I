@@ -3,18 +3,21 @@ include("connect.php");
 include("function.php");
 $error="";
 $success_msg="";
-if(isset($_POST['Submit'])){
+if(isset($_POST['Submit'])&& $_POST['g-recaptcha-response']){
       #variable_initialization
       $email=$_POST['email'];
       $password=$_POST['password'];
-      if(email_exists($email,$connection)){
+      $CaptchaSecret='6LdCJd0eAAAAANNk4IVObScNpxblmAbqTnU6zF3s';
+      $VerifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' .$CaptchaSecret. '&response=' . $_POST['g-recaptcha-response']);
+      $Response = json_decode($VerifyResponse);
+      if(email_exists($email, $connection) && $Response->success){
             $result=mysqli_query($connection,"select Password from registered_user where Email='$email'");
             $retrievedPassword=mysqli_fetch_assoc($result);
             if(md5($password)==$retrievedPassword['Password']){
               $error="Password is correct!!!!";
               #this variable is for checking whether a user is login in or not
               $_SESSION['email']=$email;
-              header("location: home.php");
+              header("location: myprofile.php");
             }
             else{
             $error="Password is incorrect!!!!";
@@ -34,6 +37,7 @@ if(isset($_POST['Submit'])){
 
     <link rel="stylesheet" href="Assets/bootstrap.css">
     <link rel="stylesheet" href="Assets/style.css">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
     <title>Sign In | Book Xchange</title>
 </head>
@@ -88,6 +92,9 @@ if(isset($_POST['Submit'])){
           <div class="form-floating">
             <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password">
             <label for="floatingPassword">Password</label>
+          </div>
+          <div class="form-floating">
+          <div class="g-recaptcha" data-sitekey="6LdCJd0eAAAAAITvtRKsUFvLEQskLmfQGhbtx-_3"></div><br/> <br/>
           </div>
 
           <!-- <button class="w-100 btn btn-lg btn-primary" type="submit" >Sign in</button> -->

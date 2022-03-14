@@ -46,7 +46,7 @@
                 <ul class="dropdown-menu" aria-labelledby="dropdown04">
                     <li><a class="dropdown-item active" href="myprofile.html">My Profile</a></li>
                     <li><a class="dropdown-item" href="myinventory.html">My Inventory</a></li>
-                    <li><a class="dropdown-item" href="Signout.php">Sign Out</a></li>
+                    <li><a class="dropdown-item" href="index.html">Sign Out</a></li>
                 </ul>
             </li>
       </ul>
@@ -64,14 +64,14 @@
               </div>
             </div>
           </div>
-
+    
           <div class="col-md-9 personal-info ">
             <form class="form-horizontal">
           <table  class="table table-sm profileborder">
             <tr>
               <td><img src="Images/avatar.png" class="avatar img-circle" alt="avatar" height="120px" width="120px"></td>
               <td>
-
+                
                 <div class="profile-head" style="text-align: left;">
                   <h3>
                       dwarfplanet
@@ -84,8 +84,8 @@
                 </div>
               </td>
                 </tr>
-
-              <tr>
+               
+              <tr>  
                 <td><label class="col-sm-7 control-label" style="text-align: right;">Username</label></td>
                 <td><input type="text" class="form-control" disabled="true" value="dwarfplanet"></td>
               </tr>
@@ -101,7 +101,7 @@
                 <td><label class="col-sm-7 control-label" style="text-align: right;">Birthdate</label></td>
                 <td><input type="date" class="form-control" disabled="true"  value="07-09-1995"></td>
               </tr>
-              <tr>
+              <tr>  
                 <td><label class="col-sm-7 control-label" style="text-align: right;">Phone</label></td>
                 <td><input type="tel" class="form-control" disabled="true"  value="807 123-1234"></td>
               </tr>
@@ -109,7 +109,7 @@
                 <td><label class="col-sm-7 control-label" style="text-align: right;">E-mail address</label></td>
                 <td><input type="email" class="form-control" value="dwarfplanet@email.com" disabled="true"></td>
               </tr>
-              <tr>
+              <tr>  
                 <td><label class="col-sm-7 control-label" style="text-align: right;">Address line</label></td>
                 <td><input type="text" class="form-control" disabled="true"  value="123 Arrowsmith Close"></td>
               </tr>
@@ -205,7 +205,7 @@
         </div>
         <br>
       </main>
-
+      
       <footer class="footer bg-dark mt-auto py-3 bg-light">
         <div class="container">
             <p class="text-light">copyright © 2021 bookxchange.ca</p>
