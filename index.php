@@ -36,9 +36,9 @@
             </li>
 
           </ul>
-          <ul class="navbar-nav navbar-right">
-            <li class="nav-item"><a class="nav-link" href="signin.php">Sign In</a></li>
-            <li></li>
+          <ul class="nav-item navbar-nav navbar-right">
+            <li><a class="nav-link active" href="signup.php">Register</a></li>
+            <li><a class="nav-link active" href="signin.php">Sign In</a></li>
           </ul>
         </div>
       </div>
