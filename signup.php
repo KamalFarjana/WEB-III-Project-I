@@ -63,7 +63,7 @@ if(isset($_POST['Submit'])){
         #unique image name
         $unique_image_name=$email.time().".".$extension_verification;
         #Query to insert the user data into the DataBase
-        $insertQuery = "INSERT INTO registereduser(UserName,FirstName,LastName,email,PhoneNumber,Address,PostalCode,Image,Password) VALUES ( '$username','$FirstName','$LastName','$email','$Phonenumber','$Address','$PostCode','$unique_image_name','$Hashed_password')";
+        $insertQuery = "INSERT INTO registered_user(UserName,FirstName,LastName,email,PhoneNumber,Address,PostalCode,Image,Password) VALUES ( '$username','$FirstName','$LastName','$email','$Phonenumber','$Address','$PostCode','$unique_image_name','$Hashed_password')";
         if(mysqli_query($connection, $insertQuery))
           {
           if(move_uploaded_file($tmp_image,"Images/$image")){

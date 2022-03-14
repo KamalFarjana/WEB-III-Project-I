@@ -17,7 +17,7 @@ function email_exists($email,$connection){
   else return false;
 }
 function username_exists($username,$connection){
-  $Database_username=mysqli_query($connection,"SELECT * from registered_user where Username='$username'");
+  $Database_username=mysqli_query($connection,"SELECT * from registered_user where UserName='$username'");
   if(mysqli_num_rows($Database_username)==1){
     return true;
   }
