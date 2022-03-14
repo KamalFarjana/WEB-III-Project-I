@@ -20,7 +20,7 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav me-auto mb-2 mb-md-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+              <a class="nav-link active" aria-current="page" href="index.php">Home</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="aboutus.html">About Us</a>
@@ -29,16 +29,16 @@
               <a class="nav-link" href="browse.html">Browse Books</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="faq.html">FAQ</a>
+              <a class="nav-link" href="faq.php">FAQ</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="contactus.html">Contact Us</a>
             </li>
 
           </ul>
-          <ul class="navbar-nav navbar-right">
-            <li class="nav-item"><a class="nav-link" href="signin.php">Sign In</a></li>
-            <li></li>
+          <ul class="nav-item navbar-nav navbar-right">
+            <li><a class="nav-link active" href="signup.php">Register</a></li>
+            <li><a class="nav-link active" href="signin.php">Sign In</a></li>
           </ul>
         </div>
       </div>
@@ -52,7 +52,7 @@
           <div class="col-md-6">
             <div class="h-100 p-5 bg-light border rounded-3">
               <h2>HOW IT WORKS?</h2>
-              <p>Check out <a href="faq.html">FAQ</a>.</p>
+              <p>Check out <a href="faq.php">FAQ</a>.</p>
             </div>
         </div>
 

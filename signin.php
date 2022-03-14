@@ -8,7 +8,7 @@ if(isset($_POST['Submit'])){
       $email=$_POST['email'];
       $password=$_POST['password'];
       if(email_exists($email,$connection)){
-            $result=mysqli_query($connection,"select Password from registereduser where Email='$email'");
+            $result=mysqli_query($connection,"select Password from registered_user where Email='$email'");
             $retrievedPassword=mysqli_fetch_assoc($result);
             if(md5($password)==$retrievedPassword['Password']){
               $error="Password is correct!!!!";
