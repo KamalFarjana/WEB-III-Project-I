@@ -29,7 +29,7 @@ $result = mysqli_query($connection, "select * from faq");
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav me-auto mb-2 mb-md-0">
             <li class="nav-item">
-              <a class="nav-link " aria-current="page" href="index.html">Home</a>
+              <a class="nav-link " aria-current="page" href="index.php">Home</a>
             </li>
             <li class="nav-item">
               <a class="nav-link " href="aboutus.html">About Us</a>
@@ -38,7 +38,7 @@ $result = mysqli_query($connection, "select * from faq");
               <a class="nav-link" href="browse.html">Browse Books</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page"  href="faq.html">FAQ</a>
+              <a class="nav-link active" aria-current="page"  href="faq.php">FAQ</a>
             </li>
             <li class="nav-item">
               <a class="nav-link " href="contactus.html">Contact Us</a>
@@ -46,8 +46,8 @@ $result = mysqli_query($connection, "select * from faq");
 
           </ul>
           <ul class="nav-item navbar-nav navbar-right">
-            <li><a class="nav-link" href="signin.html">Sign In</a></li>
-            <li></li>
+            <li><a class="nav-link active" href="signup.php">Register</a></li>
+            <li><a class="nav-link active" href="signin.php">Sign In</a></li>
           </ul>
         </div>
       </div>
