@@ -52,7 +52,7 @@
           <div class="col-md-6">
             <div class="h-100 p-5 bg-light border rounded-3">
               <h2>HOW IT WORKS?</h2>
-              <p>Check out <a href="faq.html">FAQ</a>.</p>
+              <p>Check out <a href="faq.php">FAQ</a>.</p>
             </div>
         </div>
 

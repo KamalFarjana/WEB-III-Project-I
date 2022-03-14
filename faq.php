@@ -1,3 +1,12 @@
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+include("connect.php");
+include("function.php");
+$result = mysqli_query($connection, "select * from faq");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -52,124 +61,26 @@
             <div class="row" style="text-align: left;">
                 <div class="col-10 mx-auto">
                     <div class="accordion" id="faqExample">
-                        <div class="card">
-                            <div class="card-header p-2" id="headingOne">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                      Q: How does Book Exchanging work?
-                                    </button>
-                                  </h5>
-                            </div>
-        
-                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#faqExample">
-                                <div class="card-body">
-                                    <b>Answer:</b> Type in the books you want to give away and take books you want to read instead.
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="card">
-                            <div class="card-header p-2" id="headingTwo">
-                                <h5 class="mb-0">
-                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                                  Q: I am unable to see the pickup location. Why is that?
-                                </button>
-                              </h5>
-                            </div>
-                            <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#faqExample">
-                                <div class="card-body">
-                                    <b>Answer:</b> You first need to give away a book, in order to take book.
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="card">
-                            <div class="card-header p-2" id="headingThree">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-                                      Q. How should I take a book?
-                                    </button>
-                                  </h5>
-                            </div>
-                            <div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#faqExample">
-                                <div class="card-body">
-                                    <b>Answer:</b> Contact the person that giving away a book through phone number or email they provided to discuss.
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="card">
-                            <div class="card-header p-2" id="headingThree">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                        Q. How should I take remove book?
-                                    </button>
-                                  </h5>
-                            </div>
-                            <div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#faqExample">
-                                <div class="card-body">
-                                    <b>Answer:</b> You can remove the book from my inventory. Click on remove option. You can also put the username of the person that took your book and rate him.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                          <div class="card-header p-2" id="headingThree">
-                              <h5 class="mb-0">
-                                  <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                      Q. What is an ISBN?
-                                  </button>
-                                </h5>
-                          </div>
-                          <div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#faqExample">
-                              <div class="card-body">
-                                  <b>Answer:</b> ISBN stands for International Standard Book Number. You can find the ISBN on the back cover of the book near the bar code, or on the copyright page of the book.
-                              </div>
-                          </div>
-                      </div>
-                      <div class="card">
-                        <div class="card-header p-2" id="headingThree">
-                            <h5 class="mb-0">
-                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                    Q. Do you rent textbooks?
-                                </button>
-                              </h5>
-                        </div>
-                        <div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#faqExample">
-                            <div class="card-body">
-                                <b>Answer:</b> Book Xchange does not currently offer a textbook rental program.
-                            </div>
-                        </div>
+                        <?php
+                        while($row = mysqli_fetch_array($result)) {
+                            echo "<div class=\"card\">";
+                            echo "<div class=\"card-header p-2\" id=\"headingOne\">";
+                            echo "<h5 class=\"mb-0\">";
+                            echo "<button class=\"btn btn-link\" type=\"button\" data-toggle=\"collapse\" data-target=\"#collapseOne\" aria-expanded=\"true\" aria-controls=\"collapseOne\">";
+                            echo "Q: ".$row[1];
+                            echo "</button>";
+                            echo "</h5>";
+                            echo "</div>";
+                            echo "<div id=\"collapseTwo\" class=\"collapse show\" aria-labelledby=\"headingTwo\" data-parent=\"#faqExample\">";
+                            echo "<div class=\"card-body\">";
+                            echo "<b>Answer: </b>".$row[2];
+                            echo "</div>";
+                            echo "</div>";
+                            echo "</div>";
+                            echo "<br/>";
+                        }
+                        ?>
                     </div>
-                    <div class="card">
-                      <div class="card-header p-2" id="headingThree">
-                          <h5 class="mb-0">
-                              <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                  Q. How can I reset my Login and/or Password??
-                              </button>
-                            </h5>
-                      </div>
-                      <div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#faqExample">
-                          <div class="card-body">
-                              <b>Answer:</b> If you have forgotten your Username or Password, click the ‘Forgot your Password?’ link when logging in to kick-start the password recovery process. Follow the prompts to provide your email address and we will email your password details directly. If you encounter any further problems logging in, please do not hesitate to contact us..
-                          </div>
-                      </div>
-                  </div>
-                  <div class="card">
-                    <div class="card-header p-2" id="headingThree">
-                        <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                Q. How do I make changes to my account details?
-                            </button>
-                          </h5>
-                    </div>
-                    <div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#faqExample">
-                        <div class="card-body">
-                            <b>Answer:</b> You can make changes to your account details at any time. Simply log in using your email address and password and select the ‘Edit Profile’ link at the top right of the home page. Once signed in, you can make the changes you need.
-                        </div>
-                    </div>
-                </div>
-                    </div>
-        
                 </div>
             </div>
         </div>
