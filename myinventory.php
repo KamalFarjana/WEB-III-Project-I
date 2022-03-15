@@ -1,3 +1,16 @@
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+include("connect.php");
+include("function.php");
+
+#status >>> 1 = active, 0 = inactive
+$result_for_active = mysqli_query($connection, "select * from books where status=1");
+$result_for_inactive = mysqli_query($connection, "select * from books where status=1");
+// print_r($result);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,41 +74,48 @@
               <h1 class="h2">My Inventory</h1>
           </div>
 
-          <div class="row">
-            <div class="card col-xs-12 col-sm-6 col-md-3">
-              <img src="Images/book-cover.jpg" class="card-img-top" alt="1984"/>
-              <div class="card-body">
-                <h5 class="card-title">1984</h5>
-                <p class="card-text">George Orwell</p>
-              </div>
-              <div class="card-footer">
-                <a href="editbook.html" class="card-link"><img src="Images/edit.png" alt="Edit" style="width:120px;height:36px;"></a>
-                <a href="removebook.html" class="card-link"><img src="Images/remove.png" alt="Edit" style="width:120px;height:36px;"></a>
-              </div>
-            </div>
-            <div class="card col-xs-12 col-sm-6 col-md-3">
-              <img src="Images/book-cover-3.jpg" class="card-img-top" alt="The Wolf of Wall Street"/>
-              <div class="card-body">
-                <h5 class="card-title">The Wolf of Wall Street</h5>
-                <p class="card-text">Jordan Belfort</p>
-              </div>
-              <div class="card-footer">
-                <a href="editbook.html" class="card-link"><img src="Images/edit.png" alt="Edit" style="width:120px;height:36px;"></a>
-                <a href="removebook.html" class="card-link"><img src="Images/remove.png" alt="Edit" style="width:120px;height:36px;"></a>
-              </div>
-            </div>
+          <div class="row">            
+            <?php
+            while($row = mysqli_fetch_array($result_for_active)) {
+              $userId = $row[6];
+              $bookId = $row[0];
+
+              echo "<div class=\"card col-xs-12 col-sm-6 col-md-3\">";
+              echo "<img src=\"Images/book-cover.jpg\" class=\"card-img-top\"/>";
+              echo "<div class=\"card-body\">";
+              echo "<h5 class=\"card-title\">".$row[1]."</h5>";
+              echo "<p class=\"card-text\">".$row[2]."</p>";
+              echo "</div>";
+              echo "<div class=\"card-footer\">";
+              echo "<a href=\"editbook.php?id=$bookId\" class=\"card-link\"><img src=\"Images/edit.png\" alt=\"Edit\" style=\"width:120px;height:36px;\"></a>";
+              echo "<a href=\"removebook.php?id=$bookId\" class=\"card-link\"><img src=\"Images/remove.png\" alt=\"Remove\" style=\"width:120px;height:36px;\"></a>";
+              echo "</div>";
+              echo "</div>";
+            }
+          ?>
           </div>
+          
+
           <br>
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2">Inactive</h1>
         </div>
         <div class="row">
-          <div class="card col-xs-12 col-sm-6 col-md-3">
-            <img src="Images/book-cover-6.jpg" class="card-img-top" alt="book6"/>
-            <div class="card-body">
-              <h5 class="card-title">The Alchemist</h5>
-              <p class="card-text">Paulo Coelho</p>
-            </div>
+        <div class="row">            
+            <?php
+            while($row = mysqli_fetch_array($result_for_inactive)) {
+              $userId = $row[6];
+              $bookId = $row[0];
+
+              echo "<div class=\"card col-xs-12 col-sm-6 col-md-3\">";
+              echo "<img src=\"Images/book-cover.jpg\" class=\"card-img-top\"/>";
+              echo "<div class=\"card-body\">";
+              echo "<h5 class=\"card-title\">".$row[1]."</h5>";
+              echo "<p class=\"card-text\">".$row[2]."</p>";
+              echo "</div>";
+              echo "</div>";
+            }
+          ?>
           </div>
         </div>
 
