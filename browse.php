@@ -1,3 +1,14 @@
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+include("connect.php");
+include("function.php");
+
+$result = mysqli_query($connection, "select * from books");
+// print_r($result);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -102,75 +113,32 @@
             </table>
           </form>
           </div>
-          <div class="card col-xs-12 col-sm-6 col-md-3">
-            <img src="Images/book-cover.jpg" class="card-img-top" alt="1984"/>
-            <div class="card-body">
-              <h5 class="card-title">1984</h5>
-              <p class="card-text">George Orwell</p>
-            </div>
-            <div class="card-body">
-              <a href="viewbook.html" class="card-link">View Book</a>
-            </div>
-            <div class="card-footer">
-              <small class="text-muted">Posted by <a href="myprofile.html">dwarfplanet</a><br>Posted on March 31, 2021</small>
-            </div>
-          </div>
-          <div class="card col-xs-12 col-sm-6 col-md-3">
-            <img src="Images/book-cover-2.jpg" class="card-img-top" alt="Unfu*k Yourself"/>
-            <div class="card-body">
-              <h5 class="card-title">Unfu*k Yourself</h5>
-              <p class="card-text">Gary John Bishop</p>
-            </div>
-            <div class="card-body">
-              <a href="#" class="card-link">View Book</a>
-            </div>
-            <div class="card-footer">
-              <small class="text-muted">Posted by <a href="#">user</a><br>Posted on March 28, 2021</small>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="card col-xs-12 col-sm-6 col-md-3">
-            <img src="Images/book-cover-3.jpg" class="card-img-top" alt="The Wolf of Wall Street"/>
-            <div class="card-body">
-              <h5 class="card-title">The Wolf of Wall Street</h5>
-              <p class="card-text">Jordan Belfort</p>
-            </div>
-            <div class="card-body">
-              <a href="#" class="card-link">View Book</a>
-            </div>
-            <div class="card-footer">
-              <small class="text-muted">Posted by <a href="myprofile.html">dwarfplanet</a><br>Posted on March 21, 2021</small>
-            </div>
-          </div>
-          <div class="card col-xs-12 col-sm-6 col-md-3">
-            <img src="Images/book-cover-4.jpg" class="card-img-top" alt="Fifty Shades of Grey"/>
-            <div class="card-body">
-              <h5 class="card-title">Fifty Shades of Grey</h5>
-              <p class="card-text">E. L. James</p>
-            </div>
-            <div class="card-body">
-              <a href="#" class="card-link">View Book</a>
-            </div>
-            <div class="card-footer">
-              <small class="text-muted">Posted by <a href="myprofile.html">user</a><br>Posted on March 16, 2021</small>
-            </div>
-          </div>
-          <div class="card col-xs-12 col-sm-6 col-md-3">
-            <img src="Images/book-cover-5.jpg" class="card-img-top" alt="A Storm of Swords"/>
-            <div class="card-body">
-              <h5 class="card-title">A Storm of Swords</h5>
-              <p class="card-text">George R. R. Martin</p>
-            </div>
-            <div class="card-body">
-              <a href="#" class="card-link">View Book</a>
-            </div>
-            <div class="card-footer">
-              <small class="text-muted">Posted by <a href="#">user</a><br>Posted on March 13, 2021</small>
-            </div>
-          </div>
-        </div>
+          <?php
+            while($row = mysqli_fetch_array($result)) {
+              $userId = $row[6];
+              $bookId = $row[0];
+              $firstName = '';
+              $lastName = '';
+              $userProfile = mysqli_query($connection, "select * from registered_user where User_id='$userId'");
+              while ($userRow = mysqli_fetch_array($userProfile)) {
+                $firstName = $userRow['FirstName'];
+                $lastName = $userRow['LastName'];
+              }
+              echo "<div class=\"card col-xs-12 col-sm-6 col-md-3\">";
+              echo "<img src=\"Images/book-cover.jpg\" class=\"card-img-top\" alt=\"1984\"/>";
+              echo "<div class=\"card-body\">";
+              echo "<h5 class=\"card-title\">".$row[1]."</h5>";
+              echo "<p class=\"card-text\">".$row[2]."</p>";
+              echo "</div>";
+              echo "<div class=\"card-body\">";
+              echo "<a href=\"viewbook.php?id=$bookId\" class=\"card-link\">View Book</a>";
+              echo "</div>";
+              echo "<div class=\"card-footer\">";
+              echo "<small class=\"text-muted\">Posted by <a href=\"myprofile.php\">".$firstName." ".$lastName."</a><br>Posted on ".date('d-M-yy',strtotime($row[11]))."</small>";
+              echo "</div>";
+              echo "</div>";
+            }
+          ?>
 
         </div>
       </main>

@@ -39,4 +39,15 @@ function faq_load() {
   return $faqContent;
 }
 
+//books
+function book_load() {
+  $bookContent = mysql_query($connection, "select * from books");
+  return $bookContent;
+}
+
+function getUserProfile($userId) {
+  $userContent = mysql_query($connection, "select * from registered_user where User_id='$userId'");
+  return $userContent;
+}
+
  ?>
