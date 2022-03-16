@@ -24,6 +24,9 @@ if(isset($_POST['Submit'])){
       {
         $error= "First name or Last name is too short";
       }
+      elseif(!preg_match("/^[a-zA-Z-' ]*$/",$FirstName) || !preg_match("/^[a-zA-Z-' ]*$/",$LastName)){
+        $error="Only letters and white space allowed";
+      }
       #User Email Validation and Verification
       elseif(!filter_var($email, FILTER_VALIDATE_EMAIL))
       {
@@ -47,9 +50,12 @@ if(isset($_POST['Submit'])){
       elseif($password!=$passwordConfirm){
         $error="Passwords doesnot match!!!";
       }
-      elseif(strlen($PostCode)<6 ||strlen($PostCode)>6 )
+      elseif(!preg_match('/^\d{6}$/',$PostCode))
       {
-        $error="Postal code should be 6 characters/numbers";
+        $error="Invalid Postal code";
+      }
+      elseif(!preg_match("/^[0-9]{3}-[0-9]{4}-[0-9]{4}$/",  $Phonenumber)){
+        $error="Phone number should xxx-xxx-xxxx format";
       }
       /*elseif($imagesize>1048576)
       {
