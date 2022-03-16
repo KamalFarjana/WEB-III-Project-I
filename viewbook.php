@@ -1,3 +1,50 @@
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+include("connect.php");
+include("function.php");
+$bookId = '';
+$bookTitle = '';
+$bookAuthor = '';
+$bookISBN = '';
+$bookGenre = '';
+$bookCondition = '';
+$userId = '';
+$addedDate = '';
+$userPhone = '';
+$userEmail = '';
+$userNote = '';
+$firstName = '';
+$lastName = '';
+
+  if($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST))
+{
+    $bookId=$_POST['selectedBookId'];
+} else {
+  header('Location: browse.php');
+  die();
+}
+$result = mysqli_query($connection, "select * from books where Book_id='$bookId'");
+  while($row = mysqli_fetch_array($result)) {
+    $bookId=$row['Book_id'];
+    $bookTitle=$row['Title'];
+    $bookAuthor=$row['Author'];
+    $bookISBN=$row['ISBN'];
+    $bookGenre=$row['Genre'];
+    $bookCondition=$row['Condition'];
+    $userId=$row['User_id'];
+    $addedDate=$row['AddedDate'];
+    $userPhone=$row['PhoneNumber'];
+    $userEmail=$row['Email'];
+    $userNote = $row['Note'];
+  }
+$userProfile = mysqli_query($connection, "select * from registered_user where User_id='$userId'");
+  while ($userRow = mysqli_fetch_array($userProfile)) {
+    $firstName = $userRow['FirstName'];
+    $lastName = $userRow['LastName'];
+  }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,22 +67,22 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav me-auto mb-2 mb-md-0">
             <li class="nav-item">
-              <a class="nav-link" href="index.html">Home</a>
+              <a class="nav-link" href="index.php">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="aboutus.html">About Us</a>
+              <a class="nav-link" href="aboutus.php">About Us</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="browse.html">Browse Books</a>
+              <a class="nav-link" href="browse.php">Browse Books</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="addbook.html">Add Book</a>
+                <a class="nav-link" href="addbook.php">Add Book</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="faq.html">FAQ</a>
+              <a class="nav-link" href="faq.php">FAQ</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="contactus.html">Contact Us</a>
+              <a class="nav-link" href="contactus.php">Contact Us</a>
             </li>
           </ul>
 
@@ -44,9 +91,9 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false">dwarfplanet</a>
                 <ul class="dropdown-menu" aria-labelledby="dropdown04">
-                    <li><a class="dropdown-item" href="myprofile.html">My Profile</a></li>
-                    <li><a class="dropdown-item" href="myinventory.html">My Inventory</a></li>
-                    <li><a class="dropdown-item" href="index.html">Sign Out</a></li>
+                    <li><a class="dropdown-item" href="myprofile.php">My Profile</a></li>
+                    <li><a class="dropdown-item" href="myinventory.php">My Inventory</a></li>
+                    <li><a class="dropdown-item" href="signout.php">Sign Out</a></li>
                 </ul>
             </li>
       </ul>
@@ -57,7 +104,10 @@
       <main class="flex-shrink-0">
       <div class="container py-4 container-fluid">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-          <h1 class="h2">1984</h1>
+          <?php
+            echo "<h1 class=\"h2\">".$bookTitle."</h1>";
+          ?>
+          <!-- <h1 class="h2">1984</h1> -->
         </div>
         
         <div class="row">
@@ -65,7 +115,21 @@
           <img src="Images/book-cover.jpg" class="card-img-top" alt="book1"/>
         </div>
         <div class="card col-xs-12 col-sm-6 col-md-8 viewbook align-items-start">
-              <h5 class="card-title">Book Details</h5>
+          <?php
+            echo "<h5 class=\"card-title\">Book Details</h5>";
+            echo "<p class=\"card-text\"><b>Title</b>: ".$bookTitle."</p>";
+            echo "<p class=\"card-text\"><b>Author</b>: ".$bookAuthor."</p>";
+            echo "<p class=\"card-text\"><b>ISBN</b>: ".$bookISBN."</p>";
+            echo "<p class=\"card-text\"><b>Genre</b>: ".$bookGenre."</p>";
+            echo "<p class=\"card-text\"><b>Condition</b>：".$bookCondition."</p>";
+            echo "<hr>";
+            echo "<h5 class=\"card-title\">Pickup Details</h5>";
+            echo "<p class=\"card-text\"><i>Posted by ".$firstName." ".$lastName." on ".date('d-M-yy',strtotime($addedDate))."</i></p>";
+            echo "<p class=\"card-text\"><b>Phone</b>: ".$userPhone."</p>";
+            echo "<p class=\"card-text\"><b>Email</b>: ".$userEmail."</p>";
+            echo "<p class=\"card-text\"><b>Note</b>: ".$userNote."</p>";
+          ?>
+              <!-- <h5 class="card-title">Book Details</h5>
               <p class="card-text"><b>Title</b>: 1984</p>
               <p class="card-text"><b>Author</b>: George Orwell</p>
               <p class="card-text"><b>ISBN</b>: 9780141391700</p>
@@ -76,7 +140,7 @@
               <p class="card-text"><i>Posted by dwarfplanet on March 31, 2021</i></p>
               <p class="card-text"><b>Phone</b>: 807 123-1234</p>
               <p class="card-text"><b>Email</b>: dwarfplanet@email.com</p>
-              <p class="card-text"><b>Note</b>: pls only call me between 7am-9pm</p>
+              <p class="card-text"><b>Note</b>: pls only call me between 7am-9pm</p> -->
         </div>
       </div>
 
