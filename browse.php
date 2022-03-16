@@ -31,22 +31,22 @@ $result = mysqli_query($connection, "select * from books");
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav me-auto mb-2 mb-md-0">
             <li class="nav-item">
-              <a class="nav-link" href="index.html">Home</a>
+              <a class="nav-link" href="index.php">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="aboutus.html">About Us</a>
+              <a class="nav-link" href="aboutus.php">About Us</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="browse.html">Browse Books</a>
+              <a class="nav-link active" aria-current="page" href="browse.php">Browse Books</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="addbook.html">Add Book</a>
+                <a class="nav-link" href="addbook.php">Add Book</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="faq.html">FAQ</a>
+              <a class="nav-link" href="faq.php">FAQ</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="contactus.html">Contact Us</a>
+              <a class="nav-link" href="contactus.php">Contact Us</a>
             </li>
           </ul>
 
@@ -131,7 +131,11 @@ $result = mysqli_query($connection, "select * from books");
               echo "<p class=\"card-text\">".$row[2]."</p>";
               echo "</div>";
               echo "<div class=\"card-body\">";
-              echo "<a href=\"viewbook.php?id=$bookId\" class=\"card-link\">View Book</a>";
+              echo "<form method=\"post\" action=\"viewbook.php\">";
+              echo "<input type=\"text\" name=\"selectedBookId\" style=\"display:none\" value='$bookId'>";
+              // echo "<a href=\"viewbook.php?id=$bookId\" class=\"card-link\">View Book</a>";
+              echo "<button type=\"submit\" class=\"card-link\">View Book</button>";
+              echo "</form>";
               echo "</div>";
               echo "<div class=\"card-footer\">";
               echo "<small class=\"text-muted\">Posted by <a href=\"myprofile.php\">".$firstName." ".$lastName."</a><br>Posted on ".date('d-M-yy',strtotime($row[11]))."</small>";
