@@ -63,7 +63,7 @@ if(isset($_POST['Submit'])){
               <a class="nav-link" href="aboutus.html">About Us</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="browse.html">Browse Books</a>
+              <a class="nav-link" href="browse.php">Browse Books</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="faq.php">FAQ</a>
