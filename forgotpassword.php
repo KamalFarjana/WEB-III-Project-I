@@ -1,3 +1,26 @@
+<?php
+include("connect.php");
+include("function.php");
+$error="";
+$success_msg="";
+if(isset($_POST['Submit'])){
+      #variable_initialization
+      $email=$_POST['email'];
+      $Confirm_email=$_POST['ConEmail'];
+      if($email==$Confirm_email){
+        if(email_exists($email, $connection)){
+            $_SESSION['email']=$email;
+            header("location: ResetPassword.php");
+        }
+        else{
+          $error="Email doesnot exists";
+        }
+      }
+      else{
+          $error="Email doesnot match";
+      }
+        }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,28 +68,33 @@
     </nav>
 
     <main class="form-signin text-center">
-        <form>
+      <?php
+          if(strlen($error)>0){ ?>
+            <div id="error"> <?php echo $error ?>  </div>
+      <?php }?>
+        <form method="post" action="forgotpassword.php" enctype="multipart/form-data">
           <img class="mb-4" src="Images/swap.png" alt="" width="72" height="72">
           <h1 class="h3 mb-3 fw-normal">Forgot password?</h1>
-      
-          <div class="form-floating">
-            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-            <label for="floatingInput">Enter your username</label>
-          </div>
-          <div class="form-floating">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-            <label for="floatingPassword">Confirm your username</label>
-          </div>
 
+          <div class="form-floating">
+            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email">
+            <label for="floatingInput">Enter your email</label>
+          </div>
+          <div class="form-floating">
+            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="ConEmail">
+            <label for="floatingInput">Confirm your email</label>
+          </div>
+          <br/>
           <!-- <button class="w-100 btn btn-lg btn-primary" type="submit" >Sign in</button> -->
-          <a href="querysucess.html"><img src="Images/submit.png" alt="SubmitButton" style="width:200px;height:60px;"></a>
+          <div class="form-floating">
+                <input type="submit" name="Submit" style="background-image: url('Images/submit.png'); border:none; background-repeat:no-repeat; width:200px;height:50px;" value="Submit" /><br/>
+          </div>
 
           <div class="nav-item navbar-nav">
           <p class="mt-5 mb-3">Not registered yet?
-              <a class="nav-link belowformlink" href="signup.html">Sign Up</a>
+              <a class="nav-link belowformlink" href="signup.php">Sign Up</a>
               <br><br>
-              <a class="nav-link belowformlink" href="signin.html">Sign In</a>  |  
-              <a class="nav-link belowformlink" href="recoverusername.html">Recover Username</a></p>
+
           </div>
         </form>
       </main>

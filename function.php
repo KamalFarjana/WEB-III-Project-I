@@ -1,5 +1,5 @@
 <?php
-
+session_start(); 
 // for testing
 function write_to_console($data) {
 
