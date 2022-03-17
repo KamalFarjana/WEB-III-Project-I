@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 include("connect.php");
 include("function.php");
 $error="";
@@ -6,14 +9,14 @@ $success_msg="";
 
 if(isset($_POST['AddBook'])){
   #variable_initialization
-  $BookTitle=$_POST['BookTitle'] ?? "";
-  $BookAuthor=$_POST['BookAuthor'] ?? "";
-  $BookISBN=$_POST['BookISBN'] ?? "";
-  $BookGenre=$_POST['BookGenre'] ?? "";
-  $BookCondition=$_POST['BookCondition'] ?? "";
-  $PickupPhone=$_POST['PickupPhone'] ?? "";
-  $PickupEmail=$_POST['PickupEmail'] ?? "";
-  $PickupNote=$_POST['PickupNote'] ?? "";
+  $BookTitle = mysqli_real_escape_string($connection, $_POST['BookTitle']);
+  $BookAuthor = mysqli_real_escape_string($connection, $_POST['BookAuthor']);
+  $BookISBN = mysqli_real_escape_string($connection, $_POST['BookISBN']);
+  $BookGenre = mysqli_real_escape_string($connection, $_POST['BookGenre']);
+  $BookCondition = mysqli_real_escape_string($connection, $_POST['BookCondition']);
+  $PickupPhone = mysqli_real_escape_string($connection, $_POST['PickupPhone']);
+  $PickupEmail = mysqli_real_escape_string($connection, $_POST['PickupEmail']);
+  $PickupNote = mysqli_real_escape_string($connection, $_POST['PickupNote']);
 
   $image = $_FILES['BookCover']['name'] ?? "";
   $tmp_image = $_FILES['BookCover']['tmp_name'] ?? "";
@@ -21,13 +24,12 @@ if(isset($_POST['AddBook'])){
   $allowed_image_ext = 'jpg';
   $div_image = explode(".", $image); #seperate name, ext
   $image_ext = end($div_image); #get extention
-  $unique_image_name = substr(md5(time()), 0, 10).".".$image_ext; #generate unique name
+  #$unique_image_name = substr(md5(time()), 0, 10).".".$image_ext; #generate unique name
+  $extension_verification = pathinfo($image,PATHINFO_EXTENSION);
 
   #$SubmittedBy = $_SESSION["username"];
-  $SubmittedBy = '1';
-  $Status = '1';
-
-  $Date = date('m/d/Y h:i:s a', time());
+  $SubmittedBy  = mysqli_real_escape_string($connection, 1);
+  $Status  = mysqli_real_escape_string($connection, 1);
 
   if(strlen($BookTitle)<1){
     $error= "Please enter the book title!";
@@ -41,30 +43,36 @@ if(isset($_POST['AddBook'])){
   else if (strlen($BookCondition) < 1){
     $error = "Please select book condition!";
   }
-  else if (strlen($PickupPhone) < 1 == 0 && strlen($PickupEmail) < 1){
+  else if (strlen($PickupPhone) < 1 && strlen($PickupEmail) < 1){
     $error = "Please enter either phone number or email for pickup details!";
   }
   else if ($imageSize > 1048576){
     $error = "Image size must be less than 1 MB";
   }
   else if (strcmp($image_ext, $allowed_image_ext) !==0){
-    $error = "Only jpg file is allowed!";
+    $error = "Please upload jpg cover image for the book!";
   }
-  else
-  {
-    $insertQuery = "INSERT INTO books (Title, Author, ISBN, Genre, Condition, Book_image, User_id, Status, PhoneNumber, Email, Note, AddedDate)
-                    VALUES ('$BookTitle','$BookAuthor','$BookISBN','$BookGenre','$BookCondition','$unique_image_name','$SubmittedBy','$Status','$PickupPhone','$PickupEmail', '$PickupNote', '$Date')";
+  
 
-    if(mysqli_query($connection, $insertQuery)){
-      if(move_uploaded_file($tmp_image, "cover/$unique_image_name")) {
-        $success_msg = "You have successfully added the book";
+  else
+      {
+        $unique_image_name=$BookISBN.time().".".$extension_verification;
+        #Query to insert the user data into the DataBase
+
+
+        $insertQuery = "INSERT INTO `books`(`Title`, `Author`, `ISBN`, `Genre`, `Condition`, `Book_image`, `User_id`, `Status`, `PhoneNumber`, `Email`, `Note`) VALUES ('$BookTitle','$BookAuthor','$BookISBN','$BookGenre','$BookCondition','$unique_image_name','$SubmittedBy','$Status','$PickupPhone','$PickupEmail','$PickupNote')";
+        if(mysqli_query($connection, $insertQuery))
+          {
+          if(move_uploaded_file($tmp_image,"cover/$image")){
+                rename("cover/$image", "cover/$unique_image_name");
+                $success_msg="You have successfully added the book!";
+          }
+          }
+        else
+          {
+            $error="The attempt was unsuccessful.";
+          }
       }
-    }
-    else
-    {
-      $error = "The attempt was unsuccessfull.";
-    }
-  }
 
 }
 
@@ -101,7 +109,7 @@ if(isset($_POST['AddBook'])){
               <a class="nav-link" href="browse.html">Browse Books</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="addbook.html">Add Book</a>
+                <a class="nav-link active" aria-current="page" href="addbook.php">Add Book</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="faq.html">FAQ</a>
@@ -144,28 +152,28 @@ if(isset($_POST['AddBook'])){
               <table   class="table table-sm profileborder">
                 <tr>
                   <td><label class="col-sm-7 control-label" style="text-align: left;" for="bookCover" name="BookCover">Book Cover</label></td>
-                  <td><input type="file" class="form-control" id="bookCover"></td>
+                  <td><input type="file" class="form-control" id="BookCover" name="BookCover"></td>
                 </tr>
               <tr>  
                 <td><label class="col-sm-7 control-label" style="text-align: left;" name="BookTitle">Book Title</label></td>
-                <td><input type="text" class="form-control" placeholder="Enter book title"></td>
+                <td><input type="text" class="form-control" placeholder="Enter book title" id="BookTitle" name="BookTitle"></td>
               </tr>
               <tr>
                 <td><label class="col-sm-7 control-label" style="text-align: left;" name="BookAuthor">Book's Author</label></td>
-                <td><input type="text" class="form-control" placeholder="Enter book's author"></td>
+                <td><input type="text" class="form-control" placeholder="Enter book's author" id="BookAuthor" name="BookAuthor"></td>
               </tr>
               <tr>
                 <td><label class="col-sm-7 control-label" style="text-align: left;" name="BookISBN">Book ISBN</label></td>
-                <td><input type="text" class="form-control" placeholder="Enter ISBN"></td>
+                <td><input type="text" class="form-control" placeholder="Enter ISBN" id="BookISBN" name="BookISBN"></td>
               </tr>
                 <tr>
                 <td><label class="col-sm-7 control-label" style="text-align: left;" name="BookGenre">Book's Genre</label></td>
-                <td><input type="text" class="form-control" placeholder="Enter book's genre"></td>
+                <td><input type="text" class="form-control" placeholder="Enter book's genre" id="BookGenre" name="BookGenre"></td>
               </tr>
                 <tr>
                 <td><label class="col-sm-7 control-label" for="BookCondition" style="text-align: left;" name="BookCondition">Book Condition</label></td>
                 <td>
-                  <select class="form-control" id="BookCondition">
+                  <select class="form-control" id="BookCondition" name="BookCondition">
                     <option value="New">New</option>
                     <option value="Decent">Decent</option>
                     <option value="NotGreat">Not so great</option>
@@ -177,15 +185,15 @@ if(isset($_POST['AddBook'])){
               <table class="table table-sm profileborder">
                 <tr>
                   <td><label class="col-sm-7 control-label" style="text-align: left;" name="PickupPhone">Phone No</label></td>
-                  <td><input type="text" class="form-control" id="bookCover" placeholder="Enter your phone number"></td>
+                  <td><input type="text" class="form-control" id="PickupPhone" placeholder="Enter your phone number" name="PickupPhone"></td>
                 </tr>
               <tr>  
                 <td><label class="col-sm-7 control-label" style="text-align: left;" name="PickupEmail">Email</label></td>
-                <td><input type="email" class="form-control" placeholder="Enter your email address"></td>
+                <td><input type="email" class="form-control" id="PickupEmail" placeholder="Enter your email address" name="PickupEmail"></td>
               </tr>
               <tr>
                 <td><label class="col-sm-7 control-label" style="text-align: left;" for="pickupNote" name="PickupNote">Note</label></td>
-                <td><textarea class="form-control" id="pickupNote" rows="3" placeholder="Add note here"></textarea></td>
+                <td><textarea class="form-control" id="pickupNote" rows="3" placeholder="Add note here" name="PickupNote"></textarea></td>
               </tr>
             </table>
 
