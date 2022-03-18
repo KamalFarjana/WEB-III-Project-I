@@ -7,7 +7,6 @@ include("function.php");
 
 #status >>> 1 = active, 0 = inactive
 $result_for_active = mysqli_query($connection, "select * from books where status=1");
-$result_for_desired = mysqli_query($connection, "select * from books where status=2");
 $result_for_inactive = mysqli_query($connection, "select * from books where status=0");
 // print_r($result);
 ?>
@@ -78,11 +77,11 @@ $result_for_inactive = mysqli_query($connection, "select * from books where stat
           <div class="row">            
             <?php
             while($row = mysqli_fetch_array($result_for_active)) {
-              $userId = $row[6];
+              $userId = $row[7];
               $bookId = $row[0];
 
               echo "<div class=\"card col-xs-12 col-sm-6 col-md-3\">";
-              echo "<img src=\"Images/book-cover.jpg\" class=\"card-img-top\"/>";
+              echo "<img src=\"cover/".$row[6]."\" class=\"card-img-top\"/>";
               echo "<div class=\"card-body\">";
               echo "<h5 class=\"card-title\">".$row[1]."</h5>";
               echo "<p class=\"card-text\">".$row[2]."</p>";
@@ -110,46 +109,6 @@ $result_for_inactive = mysqli_query($connection, "select * from books where stat
           ?>
           </div>
 
-          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-              <h1 class="h2">Desired</h1>
-          </div>
-
-          <div class="row">            
-            <?php
-            while($row = mysqli_fetch_array($result_for_desired)) {
-              $userId = $row[6];
-              $bookId = $row[0];
-
-              echo "<div class=\"card col-xs-12 col-sm-6 col-md-3\">";
-              echo "<img src=\"Images/book-cover-2.jpg\" class=\"card-img-top\"/>";
-              echo "<div class=\"card-body\">";
-              echo "<h5 class=\"card-title\">".$row[1]."</h5>";
-              echo "<p class=\"card-text\">".$row[2]."</p>";
-              echo "</div>";
-              echo "<div class=\"card-footer\">";
-              //echo "<a href=\"editbook.php?id=$bookId\" class=\"card-link\"><img src=\"Images/edit.png\" alt=\"Edit\" style=\"width:120px;height:36px;\"></a>";
-              //echo "<a href=\"removebook.php?id=$bookId\" class=\"card-link\"><img src=\"Images/remove.png\" alt=\"Remove\" style=\"width:120px;height:36px;\"></a>";
-              echo "</ul>";
-              echo "<li style=\"display:inline-block; padding: 5px;\">";
-              echo "<form class=\"POST\" action=\"approve.php\">";
-              echo "<input type=\"text\" name=\"selectedBookId\" style=\"display:none\" value='$bookId'>";
-              echo "<button type=\"submit\" class=\"card-link\">Approve</button>";
-              echo "</form>";
-              echo "</ul>";
-              echo "<li style=\"display:inline-block; padding: 5px;\">";
-              echo "<form class=\"POST\" action=\"decline.php\">";
-              echo "<input type=\"text\" name=\"selectedBookId\" style=\"display:none\" value='$bookId'>";
-              echo "<button type=\"submit\" class=\"card-link\">Decline</button>";
-              echo "</form>";
-              echo "</li>";
-              echo "</ul>";
-              echo "</div>";
-              echo "</div>";
-            }
-          ?>
-          </div>
-          
-
           <br>
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2">Inactive</h1>
@@ -162,7 +121,7 @@ $result_for_inactive = mysqli_query($connection, "select * from books where stat
               $bookId = $row[0];
 
               echo "<div class=\"card col-xs-12 col-sm-6 col-md-3\">";
-              echo "<img src=\"Images/book-cover.jpg\" class=\"card-img-top\"/>";
+              echo "<img src=\"cover/".$row[6]."\" class=\"card-img-top\"/>";
               echo "<div class=\"card-body\">";
               echo "<h5 class=\"card-title\">".$row[1]."</h5>";
               echo "<p class=\"card-text\">".$row[2]."</p>";
@@ -177,11 +136,6 @@ $result_for_inactive = mysqli_query($connection, "select * from books where stat
       </div>
       </main>
 
-      <footer class="footer bg-dark mt-auto py-3 bg-light">
-        <div class="container">
-            <p class="text-light">copyright © 2021 bookxchange.ca</p>
-        </div>
-    </footer>
-    <script src="Assets/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+      <?php 
+  require_once "footer.php";
+?>
