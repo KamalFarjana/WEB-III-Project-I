@@ -51,4 +51,11 @@ function getUserProfile($userId) {
   return $userContent;
 }
 
+#edit book
+function bookUpdateQuery($fieldName,$value,$connection,$Book_id){
+  $updateQuery = "UPDATE books SET $fieldName = '$value' WHERE Book_id = '$Book_id'";
+  $result = mysqli_query($connection,$updateQuery);
+  return $result;
+}
+
  ?>

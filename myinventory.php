@@ -91,13 +91,13 @@ $result_for_inactive = mysqli_query($connection, "select * from books where stat
               //echo "<a href=\"removebook.php?id=$bookId\" class=\"card-link\"><img src=\"Images/remove.png\" alt=\"Remove\" style=\"width:120px;height:36px;\"></a>";
               echo "</ul>";
               echo "<li style=\"display:inline-block; padding: 5px;\">";
-              echo "<form class=\"POST\" action=\"editbook.php\">";
+              echo "<form method=\"POST\" action=\"editbook.php\">";
               echo "<input type=\"text\" name=\"selectedBookId\" style=\"display:none\" value='$bookId'>";
               echo "<button type=\"submit\" class=\"card-link\">Edit</button>";
               echo "</form>";
               echo "</ul>";
               echo "<li style=\"display:inline-block; padding: 5px;\">";
-              echo "<form class=\"POST\" action=\"removebook.php\">";
+              echo "<form method=\"POST\" action=\"removebook.php\">";
               echo "<input type=\"text\" name=\"selectedBookId\" style=\"display:none\" value='$bookId'>";
               echo "<button type=\"submit\" class=\"card-link\">Remove</button>";
               echo "</form>";
