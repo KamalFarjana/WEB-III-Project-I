@@ -1,5 +1,5 @@
 <?php
-session_start(); 
+session_start();
 // for testing
 function write_to_console($data) {
 
@@ -16,6 +16,7 @@ function email_exists($email,$connection){
   }
   else return false;
 }
+#checking whether username exists in the database or not
 function username_exists($username,$connection){
   $Database_username=mysqli_query($connection,"SELECT * from registered_user where UserName='$username'");
   if(mysqli_num_rows($Database_username)==1){
