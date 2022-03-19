@@ -54,7 +54,7 @@ if(isset($_POST['Submit'])){
       {
         $error="Invalid Postal code";
       }
-      elseif(!preg_match("/^[0-9]{3}-[0-9]{4}-[0-9]{4}$/",  $Phonenumber)){
+      elseif(!preg_match("/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/",  $Phonenumber)){
         $error="Phone number should xxx-xxx-xxxx format";
       }
       /*elseif($imagesize>1048576)
@@ -72,8 +72,8 @@ if(isset($_POST['Submit'])){
         $insertQuery = "INSERT INTO registered_user(UserName,FirstName,LastName,email,PhoneNumber,Address,PostalCode,Image,Password) VALUES ( '$username','$FirstName','$LastName','$email','$Phonenumber','$Address','$PostCode','$unique_image_name','$Hashed_password')";
         if(mysqli_query($connection, $insertQuery))
           {
-          if(move_uploaded_file($tmp_image,"Images/$image")){
-                rename("Images/$image", "Images/$unique_image_name");
+          if(move_uploaded_file($tmp_image,"Images/profile/".$image)){
+                rename("Images/profile/".$image, "Images/profile/".$unique_image_name);
                 $success_msg="You are successfully registered";
                   #header("location: signin.php");
           }

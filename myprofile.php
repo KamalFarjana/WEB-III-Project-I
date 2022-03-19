@@ -63,7 +63,7 @@ while($rows=mysqli_fetch_array($result)){
           <ul class="navbar-nav navbar-right">
 
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false"> <?php echo $rows['Username']; ?></a>
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false"> <?php echo $rows['UserName']; ?></a>
                 <ul class="dropdown-menu" aria-labelledby="dropdown04">
                     <li><a class="dropdown-item active" href="myprofile.php">My Profile</a></li>
                     <li><a class="dropdown-item" href="myinventory.php">My Inventory</a></li>
@@ -91,12 +91,12 @@ while($rows=mysqli_fetch_array($result)){
 
             <tr>
 
-              <td><?php echo "<img src='Images/profile".$rows['Image']."'"?> class="avatar img-circle" alt="avatar" height="150px" width="140px"> </td>
+              <td><?php echo "<img src='Images/profile/".$rows['Image']."'"?> class="avatar img-circle" alt="avatar" height="150px" width="140px"> </td>
 
 <td>
                 <div class="profile-head" style="text-align: left;">
                   <h3>
-                      <?php echo  $rows['First_Name']." ". $rows['Last_Name']?>
+                      <?php echo  $rows['FirstName']." ". $rows['LastName']?>
 
                   <h6>
                       Books Given   : <?php echo $bg[0]?><br>
@@ -108,19 +108,19 @@ while($rows=mysqli_fetch_array($result)){
                 </tr>
               <tr>
                 <td><label class="col-sm-7 control-label" style="text-align: right;">Username</label></td>
-                <td><input type="text" class="form-control" disabled="true" value="<?php echo $rows['Username']; ?>"></td>
+                <td><input type="text" class="form-control" disabled="true" value="<?php echo $rows['UserName']; ?>"></td>
               </tr>
               <tr>
                 <td><label class="col-sm-7 control-label" style="text-align: right;">First name</label></td>
-                <td><input type="text" class="form-control" disabled="true"  value="<?php echo $rows['First_Name']; ?>"</td>
+                <td><input type="text" class="form-control" disabled="true"  value="<?php echo $rows['FirstName']; ?>"</td>
               </tr>
               <tr>
                 <td><label class="col-sm-7 control-label" style="text-align: right;">Last name</label></td>
-                <td><input type="text" class="form-control" disabled="true"  value="<?php echo $rows['Last_Name']; ?>"></td>
+                <td><input type="text" class="form-control" disabled="true"  value="<?php echo $rows['LastName']; ?>"></td>
               </tr>
               <tr>
                 <td><label class="col-sm-7 control-label" style="text-align: right;">Phone</label></td>
-                <td><input type="tel" class="form-control" disabled="true"  value="<?php echo $rows['Phone']; ?>"></td>
+                <td><input type="tel" class="form-control" disabled="true"  value="<?php echo $rows['PhoneNumber']; ?>"></td>
               </tr>
               <tr>
                 <td><label class="col-sm-7 control-label" style="text-align: right;">E-mail address</label></td>
@@ -133,7 +133,7 @@ while($rows=mysqli_fetch_array($result)){
 
               <tr>
                 <td><label class="col-sm-7 control-label" style="text-align: right;">Postal Code</label></td>
-                <td><input type="text" class="form-control" disabled="true"  value="<?php echo $rows['Postal_Code']; ?>"></td>
+                <td><input type="text" class="form-control" disabled="true"  value="<?php echo $rows['PostalCode']; ?>"></td>
               </tr>
           </table>
             </form>
