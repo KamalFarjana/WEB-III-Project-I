@@ -177,7 +177,7 @@ if(isset($_POST['Submit'])){
                 </div>
                 <br>
                 <div class="form-floating">
-                  <input type="text" class="form-control" id="floatingInput" placeholder="Phone Number(000-000-0000)" name="PhoneNumber">
+                  <input type="text" class="form-control" id="floatingInput" placeholder="Phone Number" name="PhoneNumber">
                   <label for="floatingInput">Phone Number (000-000-0000)</label>
                 </div><br>
               </div>
