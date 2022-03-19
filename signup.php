@@ -18,6 +18,8 @@ if(isset($_POST['Submit'])){
       $image=$_FILES['Image']['name'];
       $tmp_image=$_FILES['Image']['tmp_name'];
       $extension_verification = pathinfo($image,PATHINFO_EXTENSION);
+      #expression for validating Canadian postal code
+      $expression = '/^([a-zA-Z]\d[a-zA-Z])\ {0,1}(\d[a-zA-Z]\d)$/';
       #$imagesize=$_FILES['Image']['size'];
       #User name Validation
       if(strlen($FirstName)<3||strlen($LastName)<3)
@@ -50,12 +52,13 @@ if(isset($_POST['Submit'])){
       elseif($password!=$passwordConfirm){
         $error="Passwords doesnot match!!!";
       }
-      elseif(!preg_match('/^\d{6}$/',$PostCode))
+      elseif(!(bool)preg_match($expression, $PostCode))
       {
-        $error="Invalid Postal code";
+        $error="Invalid Postal code. The format should be like  A1A 1A1";
       }
-      elseif(!preg_match("/^[0-9]{3}-[0-9]{4}-[0-9]{4}$/",  $Phonenumber)){
-        $error="Phone number should xxx-xxx-xxxx format";
+      #format of the canadian phone numbers without country code
+      elseif(!preg_match("/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/",  $Phonenumber)){
+        $error="Phone number should 000-000-0000 format";
       }
       /*elseif($imagesize>1048576)
       {
@@ -72,8 +75,8 @@ if(isset($_POST['Submit'])){
         $insertQuery = "INSERT INTO registered_user(UserName,FirstName,LastName,email,PhoneNumber,Address,PostalCode,Image,Password) VALUES ( '$username','$FirstName','$LastName','$email','$Phonenumber','$Address','$PostCode','$unique_image_name','$Hashed_password')";
         if(mysqli_query($connection, $insertQuery))
           {
-          if(move_uploaded_file($tmp_image,"Images/$image")){
-                rename("Images/$image", "Images/$unique_image_name");
+          if(move_uploaded_file($tmp_image,"Images/profile/$unique_image_name")){
+                #rename("Images/$image", "Images/profile/$unique_image_name");
                 $success_msg="You are successfully registered";
                   #header("location: signin.php");
           }
