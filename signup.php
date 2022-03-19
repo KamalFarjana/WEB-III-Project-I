@@ -20,12 +20,13 @@ if(isset($_POST['Submit'])){
       $extension_verification = pathinfo($image,PATHINFO_EXTENSION);
       #expression for validating Canadian postal code
       $expression = '/^([a-zA-Z]\d[a-zA-Z])\ {0,1}(\d[a-zA-Z]\d)$/';
-      #$imagesize=$_FILES['Image']['size'];
+      $imagesize=$_FILES['Image']['size'];
       #User name Validation
       if(strlen($FirstName)<3||strlen($LastName)<3)
       {
         $error= "First name or Last name is too short";
       }
+      #Not allowing the letters and white space
       elseif(!preg_match("/^[a-zA-Z-' ]*$/",$FirstName) || !preg_match("/^[a-zA-Z-' ]*$/",$LastName)){
         $error="Only letters and white space allowed";
       }
@@ -52,6 +53,7 @@ if(isset($_POST['Submit'])){
       elseif($password!=$passwordConfirm){
         $error="Passwords doesnot match!!!";
       }
+      #checking the validation of the postal code
       elseif(!(bool)preg_match($expression, $PostCode))
       {
         $error="Invalid Postal code. The format should be like  A1A 1A1";
@@ -60,11 +62,14 @@ if(isset($_POST['Submit'])){
       elseif(!preg_match("/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/",  $Phonenumber)){
         $error="Phone number should 000-000-0000 format";
       }
-      /*elseif($imagesize>1048576)
+      #image type validation
+      else if ($extension_verification != 'jpg' && $extension_verification != 'png' && $extension_verification != 'jpeg'){
+          $error = "Only JPG, PNG and JPEG  files are allowed!";
+      }
+      elseif($imagesize>1048576)
       {
         $error="Image size should not be more than 1MB!";
-      }*/
-      #image type validation
+      }
       else
       {
         #hashing the password
@@ -173,7 +178,7 @@ if(isset($_POST['Submit'])){
                 <br>
                 <div class="form-floating">
                   <input type="text" class="form-control" id="floatingInput" placeholder="Phone Number" name="PhoneNumber">
-                  <label for="floatingInput">Phone Number</label>
+                  <label for="floatingInput">Phone Number (000-000-0000)</label>
                 </div><br>
               </div>
 
@@ -194,12 +199,12 @@ if(isset($_POST['Submit'])){
                   <br>
                   <div class="form-floating">
                     <input type="text" class="form-control" id="floatingInput" placeholder="Postal Code" name="Postal">
-                    <label for="floatingInput">Postal Code</label>
+                    <label for="floatingInput">Postal Code (A1A 1A1)</label>
                   </div><br>
 
                   <div class="form-floating">
                     <input type="file" class="form-control" id="floatingInput" placeholder="Browse Image" name="Image">
-                    <label for="floatingInput">Image</label>
+                    <label for="floatingInput">Upload Image</label>
                   </div><br>
               </div>
         </div>
