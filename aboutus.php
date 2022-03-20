@@ -57,8 +57,8 @@
           <div class="col-lg-6 aboutus">
             <h2 class="display-5 fw-bold lh-1 mb-3">Exchanging books save you time, money, shelf space, and environment.</h2>
             <p class="lead">BookXchange is a community for exchanging used books for free.
-                It's a great crime to have a book disappear, out of print, for none to read. We keep books in circulation and find new readers for them. 
-                You give your books you no longer need in exchange for book you really want. 
+                It's a great crime to have a book disappear, out of print, for none to read. We keep books in circulation and find new readers for them.
+                You give your books you no longer need in exchange for book you really want.
                 We strive to make a platform where locals exchange books and try to contribute to the community.</p>
             <div class="d-grid gap-2 d-md-flex justify-content-md-start">
                 <a href="faq.php" ><button class="btn btn-primary btn-lg">FAQs</button></a>
@@ -68,6 +68,6 @@
       </div>
     </main>
 
-    <?php 
+    <?php
   require_once "footer.php";
 ?>

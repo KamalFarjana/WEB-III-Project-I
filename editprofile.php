@@ -3,6 +3,14 @@
 
    include ('connect.php');
    include('session.php');
+   function logged_in(){
+     if(isset($_SESSION['email'])){
+       return true;
+     }
+     else{
+       return false;
+     }
+   }
     $query=mysqli_query($connection,"SELECT * FROM registered_user where Email='$user_check'")or die(mysqli_error());
 
   $sql="SELECT * FROM registered_user WHERE Email='$user_check'";
@@ -26,22 +34,25 @@
     $tmp_image=$_FILES ['userImage'] ['tmp_name'];
     $extension_verification = pathinfo($image,PATHINFO_EXTENSION);
     $imagesize=$_FILES['userImage']['size'];
+      $expression = '/^([a-zA-Z]\d[a-zA-Z])\ {0,1}(\d[a-zA-Z]\d)$/';
 
     if(strlen($Fname)<3||strlen($lname)<3)
     {
             $responses[]='First name or Last name is too short';
+          }
+    if(!preg_match("/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/",  $ph)){
 
-     if(strlen($pc)<6 ||strlen($pc)>6 )
-    {
-      $responses[]='Postal code should be 6 characters/numbers';
-    if(strlen($ph)<10 ||strlen($ph)>10 )
-    {
-        $responses[]='Phone Number should be 10 or less in number';
-    }
-  }
-  }
+              $responses[]='Phone Number should be 10 or less in number';}
 
-    else
+
+    if(!(bool)preg_match($expression, $pc))
+      {
+              $responses[]="Invalid Postal code. The format should be like  A1A 1A1";
+            }
+
+
+
+    if(!$responses)
     {
       if(!empty($Fname)|| !empty($lname) || !empty($add)|| !empty($pc) ||!empty($ph) || $image != '')
     {
@@ -51,33 +62,34 @@
         //check if new password match retype
           if($new == $retype && strlen($new)>7)
              {
-
-
-          //hash our password
+  //hash our password
             $password = md5($new);
-            if($image == ''){
-              $sql = "UPDATE registered_user SET Password='$password',First_Name = '$Fname',  Last_Name='$lname',Phone='$ph',Address='$add',Postal_Code='$pc',Image='$delimg'
+            if(  $imagesize== 0){
+              $sql = "UPDATE registered_user SET Password='$password',FirstName = '$Fname',  LastName='$lname',PhoneNumber='$ph',Address='$add',PostalCode='$pc'
               WHERE Email= '$user_check'";
-              header("location: Signout.php");
+              include("Signout.php");
+              echo ("<script LANGUAGE='JavaScript'>window.alert('Succesfully Updated');window.location.href='signin.php';</script>");
 
             }
 
           #unique image name
+          else{
             $unique_image_name=$user_check.time().".".$extension_verification;
 
-          $sql = "UPDATE registered_user SET Password='$password',First_Name = '$Fname',  Last_Name='$lname',Phone='$ph',Address='$add',Postal_Code='$pc',Image='$unique_image_name'
+          $sql = "UPDATE registered_user SET Password='$password',FirstName = '$Fname',  LastName='$lname',PhoneNumber='$ph',Address='$add',PostalCode='$pc',Image='$unique_image_name'
           WHERE Email= '$user_check'";
           if(mysqli_query($connection, $sql))
           {
-            if(move_uploaded_file($tmp_image,"Images/profile".$image)){
-              rename("Images/profile".$image, "Images/profile".$unique_image_name);
-                unlink("Images/profile".$delimg);
-              $responses[]="You are successfully updated";
-              header("location: Signout.php");
+            //if(move_uploaded_file($tmp_image,"Images/profile".$image)){
+              if(move_uploaded_file($tmp_image,"Images/profile/$unique_image_name")){
+              // rename("Images/profile".$image, "Images/profile".$unique_image_name);
+                unlink("Images/profile/$delimg");
+               include("Signout.php");
+                 echo "<script>alert('Successfully Updated'); window.location.href='signin.php';</script>";
             }
           }
           #unique image name
-        }
+        }}
         else{
           if($new != $retype){
 
@@ -99,25 +111,25 @@
           $responses[]="Please enter current password";
       }
       else{
-      if($_FILES['userImage']['size'] == 0){
+      if($_FILES['userImage']['size'] == 0 ){
 
-        $sql = "UPDATE registered_user SET First_Name = '$Fname',  Last_Name='$lname',Phone='$ph', Address='$add',Postal_Code='$pc'
+        $sql = "UPDATE registered_user SET FirstName = '$Fname',  LastName='$lname',PhoneNumber='$ph', Address='$add',PostalCode='$pc'
         WHERE Email= '$user_check'";
-        header('location: myprofile.php?message="Updated without passw "');
+        header('location: myprofile.php?message="Updated"');
       }
     else{
       $unique_image_name=$user_check.time().".".$extension_verification;
 
 
-    $sql = "UPDATE registered_user SET First_Name = '$Fname',  Last_Name='$lname',Phone='$ph',Address='$add',Postal_Code='$pc',Image='$unique_image_name'
+    $sql = "UPDATE registered_user SET FirstName = '$Fname',  LastName='$lname',PhoneNumber='$ph',Address='$add',PostalCode='$pc',Image='$unique_image_name'
     WHERE Email= '$user_check'";
     if(mysqli_query($connection, $sql))
     {
-      if(move_uploaded_file($tmp_image,"Images/profile".$image)){
-        rename("Images/profile".$image, "Images/profile".$unique_image_name);
-          unlink("Images/profile".$delimg);
+      if(move_uploaded_file($tmp_image,"Images/profile/$unique_image_name")){
+        //rename("Images/profile".$image, "Images/profile".$unique_image_name);
+          unlink("Images/profile/$delimg");
         $success_msg="You are successfully updated";
-        header('location: myprofile.php?message="Updated without hesi"');
+        header('location: myprofile.php?message="Updated successfully"');
 
     }
 
@@ -127,17 +139,18 @@
   }
   }
   else{
-  $sql = "UPDATE registered_user SET First_Name = '$Fname',  Last_Name='$lname',Phone='$ph',Address='$add',Postal_Code='$pc'
+  $sql = "UPDATE registered_user SET FirstName = '$Fname',  LastName='$lname',PhoneNumber='$ph',Address='$add',PostalCode='$pc'
   WHERE Email= '$user_check'";
   header('location: myprofile.php?message="Updated"');
   }
   }
   }
   ?>
+<?php if(logged_in()){ ?>
   <?php
   $result=mysqli_query($connection,$sql);
   while($rows=mysqli_fetch_array($result)){
-     $imageSrc = '/Images' . '/'. $rows['Image'];
+
 
   ?>
   <!DOCTYPE html>
@@ -155,7 +168,7 @@
   <body>
       <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
         <div class="container-fluid">
-          <a class="navbar-brand" href="index.html">Book Xchange</a>
+          <a class="navbar-brand" href="index.php">Book Xchange</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -165,7 +178,7 @@
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
               <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="index.html">Home</a>
+                <a class="nav-link" aria-current="page" href="index.php">Home</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="aboutus.php">About Us</a>
@@ -187,7 +200,7 @@
             <ul class="navbar-nav navbar-right">
               <li><a class="nav-link">Last Login <b>March 31, 2021</b>.</a></li>
               <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false"><?php echo $rows['Username']; ?></a>
+                  <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false"><?php echo $rows['UserName']; ?></a>
                   <ul class="dropdown-menu" aria-labelledby="dropdown04">
                       <li><a class="dropdown-item" href="myprofile.php">My Profile</a></li>
                       <li><a class="dropdown-item" href="myinventory.php">My Inventory</a></li>
@@ -211,9 +224,9 @@
             <div class="col-md-3">
               <div class="text-center">
                 <input type="hidden" name="oldimage"   value="<?php echo $rows['Image']; ?>" class="form-control" >
-                <img src="<?php echo "Images/profile".$rows['Image']; ?>"  class="form-control" >
+                <img src="<?php echo "Images/profile/".$rows['Image']; ?>"  class="form-control" >
                 <h6>Upload a different photo...</h6>
-                <input type="file" name="userImage" value="<?php echo "<img src='Images/profile".$rows['Image']."'"?>" class="form-control">
+                <input type="file" name="userImage" value="<?php echo "<img src='Images/profile/".$rows['Image']."'"?>" class="form-control" accept="image/png, image/jpg, image/jpeg">
               </div>
             </div>
 
@@ -229,15 +242,15 @@
 
                     <tr>
                       <td><label class="col-sm-7 control-label" style="text-align: left;">Username</label></td>
-                      <td><input type="text" class="form-control" disabled="true" value="<?php echo $rows['Username']; ?>"></td>
+                      <td><input type="text" class="form-control" disabled="true" value="<?php echo $rows['UserName']; ?>"></td>
                     </tr>
                     <tr>
                       <td><label class="col-sm-7 control-label" style="text-align: left;">First name</label></td>
-                      <td><input type="text" class="form-control" name="fname" value="<?php echo $rows['First_Name']; ?>"></td>
+                      <td><input type="text" class="form-control" name="fname" value="<?php echo $rows['FirstName']; ?>"></td>
                     </tr>
                     <tr>
                       <td><label class="col-sm-7 control-label" style="text-align: left;">Last name</label></td>
-                      <td><input type="text" class="form-control" name="lname" value="<?php echo $rows['Last_Name']; ?>"></td>
+                      <td><input type="text" class="form-control" name="lname" value="<?php echo $rows['LastName']; ?>"></td>
                     </tr>
                     </table>
 
@@ -256,7 +269,7 @@
 
                       <tr>
                         <td><label class="col-sm-7 control-label" style="text-align: left;">Phone</label></td>
-                        <td><input type="tel" class="form-control" name="phone" value="<?php echo $rows['Phone']; ?>" ></td>
+                        <td><input type="tel" class="form-control" name="phone" value="<?php echo $rows['PhoneNumber']; ?>" ></td>
                       </tr>
                       <tr>
                         <td><label class="col-sm-7 control-label" style="text-align: left;">E-mail address</label></td>
@@ -284,7 +297,7 @@
 
                     <tr>
                       <td><label class="col-sm-7 control-label" style="text-align: left;">Postal Code</label></td>
-                      <td><input type="text" class="form-control" name="postalcode" value="<?php echo $rows['Postal_Code']; ?>"></td>
+                      <td><input type="text" class="form-control" name="postalcode" value="<?php echo $rows['PostalCode']; ?>"></td>
                     </tr>
                 </table>
 
@@ -342,3 +355,6 @@
   <?php
   }
   ?>
+<?php  } else {
+    echo ("<script LANGUAGE='JavaScript'>window.alert('Login to your account');window.location.href='signin.php';</script>");
+}
