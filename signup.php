@@ -18,11 +18,17 @@ if(isset($_POST['Submit'])){
       $image=$_FILES['Image']['name'];
       $tmp_image=$_FILES['Image']['tmp_name'];
       $extension_verification = pathinfo($image,PATHINFO_EXTENSION);
-      #$imagesize=$_FILES['Image']['size'];
+      #expression for validating Canadian postal code
+      $expression = '/^([a-zA-Z]\d[a-zA-Z])\ {0,1}(\d[a-zA-Z]\d)$/';
+      $imagesize=$_FILES['Image']['size'];
       #User name Validation
       if(strlen($FirstName)<3||strlen($LastName)<3)
       {
         $error= "First name or Last name is too short";
+      }
+      #Not allowing the letters and white space
+      elseif(!preg_match("/^[a-zA-Z-' ]*$/",$FirstName) || !preg_match("/^[a-zA-Z-' ]*$/",$LastName)){
+        $error="Only letters and white space allowed";
       }
       #User Email Validation and Verification
       elseif(!filter_var($email, FILTER_VALIDATE_EMAIL))
@@ -47,15 +53,23 @@ if(isset($_POST['Submit'])){
       elseif($password!=$passwordConfirm){
         $error="Passwords doesnot match!!!";
       }
-      elseif(strlen($PostCode)<6 ||strlen($PostCode)>6 )
+      #checking the validation of the postal code
+      elseif(!(bool)preg_match($expression, $PostCode))
       {
-        $error="Postal code should be 6 characters/numbers";
+        $error="Invalid Postal code. The format should be like  A1A 1A1";
       }
-      /*elseif($imagesize>1048576)
+      #format of the canadian phone numbers without country code
+      elseif(!preg_match("/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/",  $Phonenumber)){
+        $error="Phone number should 000-000-0000 format";
+      }
+      #image type validation
+      else if ($extension_verification != 'jpg' && $extension_verification != 'png' && $extension_verification != 'jpeg'){
+          $error = "Only JPG, PNG and JPEG  files are allowed!";
+      }
+      elseif($imagesize>1048576)
       {
         $error="Image size should not be more than 1MB!";
-      }*/
-      #image type validation
+      }
       else
       {
         #hashing the password
@@ -66,8 +80,8 @@ if(isset($_POST['Submit'])){
         $insertQuery = "INSERT INTO registered_user(UserName,FirstName,LastName,email,PhoneNumber,Address,PostalCode,Image,Password) VALUES ( '$username','$FirstName','$LastName','$email','$Phonenumber','$Address','$PostCode','$unique_image_name','$Hashed_password')";
         if(mysqli_query($connection, $insertQuery))
           {
-          if(move_uploaded_file($tmp_image,"Images/$image")){
-                rename("Images/$image", "Images/$unique_image_name");
+          if(move_uploaded_file($tmp_image,"Images/profile/$unique_image_name")){
+                #rename("Images/$image", "Images/profile/$unique_image_name");
                 $success_msg="You are successfully registered";
                   #header("location: signin.php");
           }
@@ -97,38 +111,6 @@ if(isset($_POST['Submit'])){
     <title>Sign Up | Book Xchange</title>
 </head>
 <body>
-<<<<<<< Updated upstream
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="index.html">Book Xchange</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-          <ul class="navbar-nav me-auto mb-2 mb-md-0">
-            <li class="nav-item">
-              <a class="nav-link" href="index.html">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="aboutus.html">About Us</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="browse.html">Browse Books</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="faq.html">FAQ</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="contactus.html">Contact Us</a>
-            </li>
-
-          </ul>
-          <ul class="nav-item navbar-nav navbar-right">
-            <li><a class="nav-link active" href="signup.php">Register</a></li>
-            <li><a class="nav-link active" href="signin.php">Sign In</a></li>
-          </ul>
-        </div>
-=======
   <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
     <div class="container-fluid">
       <a class="navbar-brand" href="index.php">Book Xchange</a>
@@ -163,9 +145,9 @@ if(isset($_POST['Submit'])){
           <li><a class="nav-link active" href="signup.php">Register</a></li>
           <li><a class="nav-link" href="signin.php">Sign In</a></li>
         </ul>
->>>>>>> Stashed changes
       </div>
-    </nav>
+    </div>
+  </nav>
     <main class="signupform text-center">
         <?php
             if(strlen($error)>0){ ?>
@@ -201,7 +183,7 @@ if(isset($_POST['Submit'])){
                 <br>
                 <div class="form-floating">
                   <input type="text" class="form-control" id="floatingInput" placeholder="Phone Number" name="PhoneNumber">
-                  <label for="floatingInput">Phone Number</label>
+                  <label for="floatingInput">Phone Number (000-000-0000)</label>
                 </div><br>
               </div>
 
@@ -222,12 +204,12 @@ if(isset($_POST['Submit'])){
                   <br>
                   <div class="form-floating">
                     <input type="text" class="form-control" id="floatingInput" placeholder="Postal Code" name="Postal">
-                    <label for="floatingInput">Postal Code</label>
+                    <label for="floatingInput">Postal Code (A1A 1A1)</label>
                   </div><br>
 
                   <div class="form-floating">
                     <input type="file" class="form-control" id="floatingInput" placeholder="Browse Image" name="Image">
-                    <label for="floatingInput">Image</label>
+                    <label for="floatingInput">Upload Image</label>
                   </div><br>
               </div>
         </div>

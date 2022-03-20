@@ -14,10 +14,16 @@ if(isset($_POST['Submit'])){
       if(md5($Old_Password)==$RetrievedPassword['Password']){
           if($New_Password==$Confirm_NewPassword){
                   if($Old_Password!=$New_Password){
-                    $new_hashed_password=md5($New_Password);
-                    mysqli_query($connection," UPDATE registered_user SET Password='$new_hashed_password' WHERE Email='" . $_SESSION['email'] . "'");
-                    //echo '<script>alert("Password is changed successfully. Press OK to login to your account. ")</script>';
-                    echo ("<script LANGUAGE='JavaScript'>window.alert('Succesfully Updated');window.location.href='signin.php';</script>");
+                    if(strlen($New_Password)>7){
+                        $new_hashed_password=md5($New_Password);
+                        mysqli_query($connection," UPDATE registered_user SET Password='$new_hashed_password' WHERE Email='" . $_SESSION['email'] . "'");
+                      #closing the session as email is saved to session email
+                        include("Signout.php");
+                        echo ("<script LANGUAGE='JavaScript'>window.alert('Succesfully Updated');window.location.href='signin.php';</script>");
+                    }
+                   else{
+                     $error="Password length minimum is: 7";
+                   }
                   }
                   else{
                       $error="Seems like you have entered your old password";
@@ -123,6 +129,7 @@ if(isset($_POST['Submit'])){
           </div>
         </form>
       </main>
+
   <?php } else {
       echo ("<script LANGUAGE='JavaScript'>window.alert('Login to your account');window.location.href='signin.php';</script>");
   }

@@ -1,8 +1,4 @@
 <?php
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 // for testing
 function write_to_console($data) {
 
@@ -19,6 +15,7 @@ function email_exists($email,$connection){
   }
   else return false;
 }
+#checking whether username exists in the database or not
 function username_exists($username,$connection){
   $Database_username=mysqli_query($connection,"SELECT * from registered_user where UserName='$username'");
   if(mysqli_num_rows($Database_username)==1){
@@ -51,6 +48,13 @@ function book_load() {
 function getUserProfile($userId) {
   $userContent = mysql_query($connection, "select * from registered_user where User_id='$userId'");
   return $userContent;
+}
+
+#edit book
+function bookUpdateQuery($fieldName,$value,$connection,$Book_id){
+  $updateQuery = "UPDATE books SET $fieldName = '$value' WHERE Book_id = '$Book_id'";
+  $result = mysqli_query($connection,$updateQuery);
+  return $result;
 }
 
  ?>

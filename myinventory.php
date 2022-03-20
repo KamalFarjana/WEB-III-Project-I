@@ -12,7 +12,9 @@ $success_msg="";
 $email = $_SESSION['email'];
 
 $result=mysqli_query($connection,"SELECT * FROM registered_user WHERE Email='$email'");
+
 $row = mysqli_fetch_array($result);
+
 $user_id=$row['User_id'];
 
 $result_for_active = mysqli_query($connection, "select * from books where status=1 and User_Id = '$user_id' ");
@@ -81,7 +83,7 @@ if(logged_in()){
                 <ul class="dropdown-menu" aria-labelledby="dropdown04">
                     <li><a class="dropdown-item" href="myprofile.php">My Profile</a></li>
                     <li><a class="dropdown-item active" href="myinventory.php">My Inventory</a></li>
-                    <li><a class="dropdown-item" href="index.php">Sign Out</a></li>
+                    <li><a class="dropdown-item" href="Signout.php">Sign Out</a></li>
                 </ul>
             </li>
       </ul>
@@ -96,7 +98,7 @@ if(logged_in()){
               <h1 class="h2">My Inventory</h1>
           </div>
 
-          <div class="row">            
+          <div class="row">
             <?php
               while($row = mysqli_fetch_array($result_for_active)) {
               $userId = $row[7];
@@ -113,14 +115,14 @@ if(logged_in()){
               //echo "<a href=\"removebook.php?id=$bookId\" class=\"card-link\"><img src=\"Images/remove.png\" alt=\"Remove\" style=\"width:120px;height:36px;\"></a>";
               echo "</ul>";
               echo "<li style=\"display:inline-block; padding: 5px;\">";
-              echo "<form class=\"POST\" action=\"editbook.php\">";
-              echo "<input type=\"text\" name=\"selectedBookId\" style=\"display:none\" value='$bookId'>";
+              echo "<form method=\"POST\" action=\"editbook.php\">";
+              echo "<input type=\"text\" name=\"selectedBookId\" class=\"btn btn-primary btn-lg\" style=\"display:none\" value='$bookId'>";
               echo "<button type=\"submit\" class=\"card-link\">Edit</button>";
               echo "</form>";
               echo "</ul>";
               echo "<li style=\"display:inline-block; padding: 5px;\">";
-              echo "<form class=\"POST\" action=\"removebook.php\">";
-              echo "<input type=\"text\" name=\"selectedBookId\" style=\"display:none\" value='$bookId'>";
+              echo "<form method=\"POST\" action=\"removebook.php\">";
+              echo "<input type=\"text\" name=\"selectedBookId\" class=\"btn btn-primary btn-lg\" style=\"display:none\" value='$bookId'>";
               echo "<button type=\"submit\" class=\"card-link\">Remove</button>";
               echo "</form>";
               echo "</li>";
@@ -141,7 +143,7 @@ if(logged_in()){
             <h1 class="h2">Inactive</h1>
         </div>
         <div class="row">
-        <div class="row">            
+        <div class="row">
             <?php
             while($row = mysqli_fetch_array($result_for_inactive)) {
               $userId = $row[6];
@@ -168,11 +170,6 @@ if(logged_in()){
         </div>
       </div>
       </main>
-
-<<<<<<< Updated upstream
-      <?php 
-  require_once "footer.php";
-=======
       <footer class="footer bg-dark mt-auto py-3 bg-light">
       <div class="container">
           <p class="text-light">copyright © 2022 bookxchange.ca</p>
@@ -181,9 +178,7 @@ if(logged_in()){
   <script src="Assets/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
       <?php
->>>>>>> Stashed changes
 }else{
   header("location: index.php");
 }

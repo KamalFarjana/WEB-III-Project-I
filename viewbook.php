@@ -91,6 +91,7 @@ $userProfile = mysqli_query($connection, "select * from registered_user where Us
 
           <ul class="navbar-nav navbar-right">
           <?php if(logged_in()){ ?>
+
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false">dwarfplanet</a>
                 <ul class="dropdown-menu" aria-labelledby="dropdown04">
@@ -103,6 +104,8 @@ $userProfile = mysqli_query($connection, "select * from registered_user where Us
             <li><a class="nav-link" href="signup.php">Register</a></li>
             <li><a class="nav-link" href="signin.php">Sign In</a></li>
           <?php } ?>
+                </ul>
+            </li>
       </ul>
         </div>
       </div>
@@ -158,7 +161,6 @@ $userProfile = mysqli_query($connection, "select * from registered_user where Us
 
       </div>
       </main>
-
       <footer class="footer bg-dark mt-auto py-3 bg-light">
         <div class="container">
             <p class="text-light">copyright © 2022 bookxchange.ca</p>
