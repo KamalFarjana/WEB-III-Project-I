@@ -9,13 +9,15 @@ $connection = mysqli_connect("localhost","root","","book_exchange");
 if(mysqli_connect_errno()){
   echo "error occured while connecting to Database: ".mysqli_connect_errno();
 }
-use PHPMailer\PHPMailer\PHPMailer;
+/*use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
 require 'vendor/autoload.php';
-require '.\vendor\phpmailer\phpmailer\src\Exception.php';
-require '.\vendor\phpmailer\phpmailer\src\SMTP.php';
-require '.\vendor\phpmailer\phpmailer\src\PHPMailer.php';
+require 'C:\xampp\htdocs\Web_De\vendor\phpmailer\phpmailer\src\Exception.php';
+require 'C:\xampp\htdocs\Web_De\vendor\phpmailer\phpmailer\src\SMTP.php';
+require 'C:\xampp\htdocs\Web_De\vendor\phpmailer\phpmailer\src\PHPMailer.php';*/
+
+
 // Initialize PHP mailer, configure to use SMTP protocol and add credentials
 
 
@@ -23,7 +25,7 @@ $output = '';
 $responses = [];
 // Check if the form was submitted
 if (isset($_POST["submit"])){
-  $mail =new PHPMailer(true);
+
   $name = $_POST['name'];
   $email = $_POST['email'];
   $message = $_POST['message'];
@@ -42,7 +44,7 @@ if (isset($_POST["submit"])){
     }
    if (!$responses){
 
-    $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+  /*  $mail->SMTPDebug = SMTP::DEBUG_SERVER;
       $mail->IsSMTP();
       $mail->Mailer = "smtp";
       $mail->SMTPDebug  = 0;
@@ -58,17 +60,13 @@ if (isset($_POST["submit"])){
       $mail->Subject = 'Thankyou for Contacting BookXchange!We get in touch soon';
       $mail->Body = "Your Name: $name \n Your Email: $email \nYour Message: $message\n Thankyou for Contacting BookXchange!We get in touch soon.\nPls do-not-reply back";
 
-        $mail->send();
+        $mail->send();*/
         $query = "INSERT INTO `contact_us` (Name, Email,Message,Date) VALUES ('$name', '$email','$message','$date')";
         $result = mysqli_query($connection, $query);
         $output = '<div class="alert alert-success">
         <h5>Thankyou! for contacting us, We will get back to you soon!</h5>
         </div>';
         echo $output;
-
-
-
-
   }
 }
 
@@ -182,7 +180,7 @@ if (isset($_POST["submit"])){
 
     <footer class="footer bg-dark mt-auto py-3 bg-light fixed-bottom">
       <div class="container">
-        <p class="text-light">copyright © 2021 bookxchange.ca</p>
+        <p class="text-light">copyright © 2022 bookxchange.ca</p>
       </div>
     </footer>
 
