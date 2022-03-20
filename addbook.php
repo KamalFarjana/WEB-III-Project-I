@@ -11,6 +11,10 @@ if(isset($_POST['AddBook'])){
   #variable_initialization
   $email = $_SESSION['email'];
 
+  $result=mysqli_query($connection,"SELECT * FROM registered_user WHERE Email='$email'");
+  $row = mysqli_fetch_array($result);
+  $SubmittedBy=$row['User_id'];
+
   $BookTitle = mysqli_real_escape_string($connection, $_POST['BookTitle']);
   $BookAuthor = mysqli_real_escape_string($connection, $_POST['BookAuthor']);
   $BookISBN = mysqli_real_escape_string($connection, $_POST['BookISBN']);
@@ -29,8 +33,6 @@ if(isset($_POST['AddBook'])){
   #$unique_image_name = substr(md5(time()), 0, 10).".".$image_ext; #generate unique name
   $extension_verification = pathinfo($image,PATHINFO_EXTENSION);
 
-  #$SubmittedBy = $_SESSION["username"];
-  $SubmittedBy  = mysqli_real_escape_string($connection, 1);
   $Status  = mysqli_real_escape_string($connection, 1);
 
   if(strlen($BookTitle)<1){
