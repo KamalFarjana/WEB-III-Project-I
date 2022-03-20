@@ -5,6 +5,7 @@ error_reporting(E_ALL);
 include("connect.php");
 include("function.php");
 $result = mysqli_query($connection, "select * from faq");
+
 ?>
 
 <!DOCTYPE html>
@@ -51,9 +52,10 @@ $result = mysqli_query($connection, "select * from faq");
 
           </ul>
           <ul class="nav-item navbar-nav navbar-right">
-          <?php if(logged_in()){ ?>
+          <?php if(logged_in()){
+            $Logged_in_user_name=Logged_in_user_data($connection); ?>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false">dwarfplanet</a>
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false"><?php echo $Logged_in_user_name['UserName']; ?></a>
                 <ul class="dropdown-menu" aria-labelledby="dropdown04">
                     <li><a class="dropdown-item" href="myprofile.php">My Profile</a></li>
                     <li><a class="dropdown-item" href="myinventory.php">My Inventory</a></li>

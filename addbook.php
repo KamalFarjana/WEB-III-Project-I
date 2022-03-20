@@ -6,80 +6,86 @@ include("connect.php");
 include("function.php");
 $error="";
 $success_msg="";
+if(logged_in()){
+        $email = $_SESSION['email'];
+        $result=mysqli_query($connection,"SELECT * FROM registered_user WHERE Email='$email'");
+        $row = mysqli_fetch_array($result);
+        if(isset($_POST['AddBook'])){
+          #variable_initialization
 
-if(isset($_POST['AddBook'])){
-  #variable_initialization
-  $email = $_SESSION['email'];
+          $SubmittedBy=$row['User_id'];
 
-  $result=mysqli_query($connection,"SELECT * FROM registered_user WHERE Email='$email'");
-  $row = mysqli_fetch_array($result);
-  $SubmittedBy=$row['User_id'];
+          $BookTitle = mysqli_real_escape_string($connection, $_POST['BookTitle']);
+          $BookAuthor = mysqli_real_escape_string($connection, $_POST['BookAuthor']);
+          $BookISBN = mysqli_real_escape_string($connection, $_POST['BookISBN']);
+          $BookGenre = mysqli_real_escape_string($connection, $_POST['BookGenre']);
+          $BookCondition = mysqli_real_escape_string($connection, $_POST['BookCondition']);
+          $PickupPhone = mysqli_real_escape_string($connection, $_POST['PickupPhone']);
+          $PickupEmail = mysqli_real_escape_string($connection, $_POST['PickupEmail']);
+          $PickupNote = mysqli_real_escape_string($connection, $_POST['PickupNote']);
 
-  $BookTitle = mysqli_real_escape_string($connection, $_POST['BookTitle']);
-  $BookAuthor = mysqli_real_escape_string($connection, $_POST['BookAuthor']);
-  $BookISBN = mysqli_real_escape_string($connection, $_POST['BookISBN']);
-  $BookGenre = mysqli_real_escape_string($connection, $_POST['BookGenre']);
-  $BookCondition = mysqli_real_escape_string($connection, $_POST['BookCondition']);
-  $PickupPhone = mysqli_real_escape_string($connection, $_POST['PickupPhone']);
-  $PickupEmail = mysqli_real_escape_string($connection, $_POST['PickupEmail']);
-  $PickupNote = mysqli_real_escape_string($connection, $_POST['PickupNote']);
+          $image = $_FILES['BookCover']['name'] ?? "";
+          $tmp_image = $_FILES['BookCover']['tmp_name'] ?? "";
+          $imageSize = $_FILES ['BookCover']['size'] ?? "";
+          $allowed_image_ext = 'jpg';
+          $div_image = explode(".", $image); #seperate name, ext
+          $image_ext = end($div_image); #get extention
+          #$unique_image_name = substr(md5(time()), 0, 10).".".$image_ext; #generate unique name
+          $extension_verification = pathinfo($image,PATHINFO_EXTENSION);
 
-  $image = $_FILES['BookCover']['name'] ?? "";
-  $tmp_image = $_FILES['BookCover']['tmp_name'] ?? "";
-  $imageSize = $_FILES ['BookCover']['size'] ?? "";
-  $allowed_image_ext = 'jpg';
-  $div_image = explode(".", $image); #seperate name, ext
-  $image_ext = end($div_image); #get extention
-  #$unique_image_name = substr(md5(time()), 0, 10).".".$image_ext; #generate unique name
-  $extension_verification = pathinfo($image,PATHINFO_EXTENSION);
+          $Status  = mysqli_real_escape_string($connection, 1);
 
-  $Status  = mysqli_real_escape_string($connection, 1);
+          if(strlen($BookTitle)<1){
+            $error= "Please enter the book title!";
+          }
+          else if (strlen($BookAuthor) < 1){
+            $error = "Please enter the name of the book's author!";
+          }
+          else if (strlen($BookGenre) < 1){
+            $error = "Please enter the genre for the book!";
+          }
+          else if (strlen($BookCondition) < 1){
+            $error = "Please select book condition!";
+          }
+          else if (strlen($PickupPhone) < 1 && strlen($PickupEmail) < 1){
+            $error = "Please enter either phone number or email for pickup details!";
+          }
+          else if (strlen($PickupPhone) >= 1  && !preg_match("/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/",$PickupPhone)){
 
-  if(strlen($BookTitle)<1){
-    $error= "Please enter the book title!";
-  }
-  else if (strlen($BookAuthor) < 1){
-    $error = "Please enter the name of the book's author!";
-  }
-  else if (strlen($BookGenre) < 1){
-    $error = "Please enter the genre for the book!";
-  }
-  else if (strlen($BookCondition) < 1){
-    $error = "Please select book condition!";
-  }
-  else if (strlen($PickupPhone) < 1 && strlen($PickupEmail) < 1){
-    $error = "Please enter either phone number or email for pickup details!";
-  }
-  else if ($imageSize > 1048576){
-    $error = "Image size must be less than 1 MB";
-  }
-  else if (strcmp($image_ext, $allowed_image_ext) !==0){
-    $error = "Please upload jpg cover image for the book!";
-  }
+              $error="Phone number should 000-000-0000 format";
 
-
-  else
-      {
+          }
+          else if (strlen($PickupEmail) >= 1 && !filter_var($PickupEmail, FILTER_VALIDATE_EMAIL)){
+              $error="$email is not a valid email address";
+          }
+          else if ($imageSize > 1048576){
+            $error = "Image size must be less than 1 MB";
+          }
+          else if ($extension_verification != 'jpg' && $extension_verification != 'png' && $extension_verification != 'jpeg'){
+            $error = "Please upload only cover image for the book!";
+          }
+          else
+        {
         $unique_image_name=$email.time().".".$extension_verification;
         #Query to insert the user data into the DataBase
 
 
-        $insertQuery = "INSERT INTO `books`(`Title`, `Author`, `ISBN`, `Genre`, `Condition`, `Book_image`, `User_id`, `Status`, `PhoneNumber`, `Email`, `Note`) VALUES ('$BookTitle','$BookAuthor','$BookISBN','$BookGenre','$BookCondition','$unique_image_name','$SubmittedBy','$Status','$PickupPhone','$PickupEmail','$PickupNote')";
-        if(mysqli_query($connection, $insertQuery))
-          {
-          if(move_uploaded_file($tmp_image,"cover/$image")){
-                rename("cover/$image", "cover/$unique_image_name");
-                $success_msg="You have successfully added the book!";
-          }
-          }
-        else
-          {
-            $error="The attempt was unsuccessful.";
-          }
+            $insertQuery = "INSERT INTO `books`(`Title`, `Author`, `ISBN`, `Genre`, `Condition`, `Book_image`, `User_id`, `Status`, `PhoneNumber`, `Email`, `Note`) VALUES ('$BookTitle','$BookAuthor','$BookISBN','$BookGenre','$BookCondition','$unique_image_name','$SubmittedBy','$Status','$PickupPhone','$PickupEmail','$PickupNote')";
+            if(mysqli_query($connection, $insertQuery))
+              {
+              if(move_uploaded_file($tmp_image,"cover/$image")){
+                    rename("cover/$image", "cover/$unique_image_name");
+                    $success_msg="You have successfully added the book!";
+              }
+              }
+            else
+              {
+                $error="The attempt was unsuccessful.";
+              }
       }
 
-}
-if(logged_in()){
+  }
+
 ?>
 
 <!DOCTYPE html>
@@ -124,11 +130,11 @@ if(logged_in()){
           </ul>
           <ul class="navbar-nav navbar-right">
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false">dwarfplanet</a>
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false"><?php echo $row['UserName']; ?></a>
                 <ul class="dropdown-menu" aria-labelledby="dropdown04">
                     <li><a class="dropdown-item" href="myprofile.php">My Profile</a></li>
                     <li><a class="dropdown-item" href="myinventory.php">My Inventory</a></li>
-                    <li><a class="dropdown-item" href="signin.php">Sign Out</a></li>
+                    <li><a class="dropdown-item" href="Signout.php">Sign Out</a></li>
                 </ul>
             </li>
           </ul>
@@ -187,7 +193,7 @@ if(logged_in()){
               <table class="table table-sm profileborder">
                 <tr>
                   <td><label class="col-sm-7 control-label" style="text-align: left;" name="PickupPhone">Phone No</label></td>
-                  <td><input type="text" class="form-control" id="PickupPhone" placeholder="Enter your phone number" name="PickupPhone"></td>
+                  <td><input type="text" class="form-control" id="PickupPhone" placeholder="Phone Number (000-000-0000)" name="PickupPhone"></td>
                 </tr>
               <tr>
                 <td><label class="col-sm-7 control-label" style="text-align: left;" name="PickupEmail">Email</label></td>
@@ -218,6 +224,6 @@ if(logged_in()){
   </html>
       <?php
 }else{
-  header("location: index.php");
+  header("location: signin.php");
 }
 ?>

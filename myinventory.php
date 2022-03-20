@@ -77,9 +77,9 @@ if(logged_in()){
           </ul>
 
           <ul class="navbar-nav navbar-right">
-            <li><a class="nav-link">Last Login <b>March 31, 2021</b>.</a></li>
+
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false">dwarfplanet</a>
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false"><?php echo $row['UserName']; ?></a>
                 <ul class="dropdown-menu" aria-labelledby="dropdown04">
                     <li><a class="dropdown-item" href="myprofile.php">My Profile</a></li>
                     <li><a class="dropdown-item active" href="myinventory.php">My Inventory</a></li>

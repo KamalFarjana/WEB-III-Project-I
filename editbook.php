@@ -7,6 +7,7 @@ error_reporting(E_ALL);
 $error = "";
 $success_msg = "";
 if(logged_in()){
+  $Logged_in_user_name=Logged_in_user_data($connection);
   if($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST))
   {
       $bookID = $_POST['selectedBookId'];
@@ -53,12 +54,20 @@ if(logged_in()){
     && $UpdatedimageSize == 0 ){
         $error = "You have not change any filed to be updated";
     }
-    elseif(strlen($UpdatedTitle )==0 || strlen($UpdatedAuthor) ==0 || strlen($UpdatedISBN) == 0 || strlen($UpdatedGenre) == 0 || strlen($updatedBookStatus) == 0 )
+    elseif(strlen($UpdatedTitle )==0 || strlen($UpdatedAuthor) ==0  || strlen($UpdatedGenre) == 0 || strlen($updatedBookStatus) == 0 )
     {
       $error = "Book details cannot be empty";
     }
     else if (strlen($UpdatedPhone) < 1 && strlen($UpdatedEmail) < 1){
       $error = "Please enter either phone number or email for pickup details!";
+    }
+    else if (strlen($UpdatedPhone) >= 1  && !preg_match("/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/",$UpdatedPhone)){
+
+        $error="Phone number should 000-000-0000 format";
+
+    }
+    else if (strlen($UpdatedEmail) >= 1 && !filter_var($UpdatedEmail, FILTER_VALIDATE_EMAIL)){
+        $error="$email is not a valid email address";
     }
     elseif($UpdatedimageSize> 0 && $UpdatedimageSize > 1048576)
     {
@@ -163,11 +172,11 @@ if(logged_in()){
           </ul>
           <ul class="navbar-nav navbar-right">
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false">dwarfplanet</a>
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false"><?php echo $Logged_in_user_name['UserName']; ?></a>
                 <ul class="dropdown-menu" aria-labelledby="dropdown04">
                     <li><a class="dropdown-item" href="myprofile.php">My Profile</a></li>
                     <li><a class="dropdown-item" href="myinventory.php">My Inventory</a></li>
-                    <li><a class="dropdown-item" href="signin.php">Sign Out</a></li>
+                    <li><a class="dropdown-item" href="Signout.php">Sign Out</a></li>
                 </ul>
             </li>
           </ul>
@@ -239,7 +248,7 @@ if(logged_in()){
               <table class="table table-sm profileborder">
                 <tr>
                   <td><label class="col-sm-7 control-label" style="text-align: left;" for="bookCover">Phone</label></td>
-                  <td><input type="text" class="form-control" id="bookCover" value="<?php echo $Phonenumber ;?>" name="updatedPhone"></td>
+                  <td><input type="text" class="form-control" id="bookCover" placeholder="Phone Number (000-000-0000)" value="<?php echo $Phonenumber ;?>" name="updatedPhone"></td>
                 </tr>
               <tr>
                 <td><label class="col-sm-7 control-label" style="text-align: left;">Email</label></td>
