@@ -24,11 +24,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST))
     $status = $retrivebookdata[8];
     $Phonenumber=  $retrivebookdata[9];
     $Email=  $retrivebookdata[10];
-    $Note=  $retrivebookdata[11];      
+    $Note=  $retrivebookdata[11];
 }
 #get book data for catch bookID from database
 
-if (isset($_POST['updateBook'])){    
+if (isset($_POST['updateBook'])){
   #initializing the variable
   $bookID = $_POST['selectedBookId'];
   $UpdatedTitle = $_POST['updatedTitle'];
@@ -43,13 +43,13 @@ if (isset($_POST['updateBook'])){
   $Updatedtmp_image = $_FILES['updatedImage']['tmp_name'];
   $UpdatedimageSize = $_FILES ['updatedImage']['size'];
   #$UpdatedAllowed_image_ext = array('jpg','png','jpge');
-  $Updated_div_image = explode(".", $Updatedimage); #seperate name, ext 
+  $Updated_div_image = explode(".", $Updatedimage); #seperate name, ext
   $Updated_image_ext = end($Updated_div_image); #get extention
-  $uploadDate=date("dmYHis_");  
-  $Updated_unique_image_name = $uploadDate.$Title.".".$Updated_image_ext; #generate unique name  
+  $uploadDate=date("dmYHis_");
+  $Updated_unique_image_name = $uploadDate.$Title.".".$Updated_image_ext; #generate unique name
 
-  if($UpdatedTitle == $Title && $UpdatedAuthor == $Author && $UpdatedISBN == $Isbn && $UpdatedGenre == $Genre && 
-  $updatedBookStatus == $status && $UpdatedPhone == $Phonenumber && $UpdatedEmail == $Email && $UpdatedNote == $Note 
+  if($UpdatedTitle == $Title && $UpdatedAuthor == $Author && $UpdatedISBN == $Isbn && $UpdatedGenre == $Genre &&
+  $updatedBookStatus == $status && $UpdatedPhone == $Phonenumber && $UpdatedEmail == $Email && $UpdatedNote == $Note
   && $UpdatedimageSize == 0 ){
       $error = "You have not change any filed to be updated";
   }
@@ -59,32 +59,22 @@ if (isset($_POST['updateBook'])){
   }
   else if (strlen($UpdatedPhone) < 1 && strlen($UpdatedEmail) < 1){
     $error = "Please enter either phone number or email for pickup details!";
-  } 
-  elseif($UpdatedimageSize> 0)
+  }
+  elseif($UpdatedimageSize> 0 && $UpdatedimageSize > 1048576)
   {
-            if ($UpdatedimageSize > 1048576){
-                $error = "Image size must be less than 1 MB";
-            }
-            else if ($Updated_image_ext != 'jpg' && $Updated_image_ext != 'png' && $Updated_image_ext != 'jpeg'){
-                $error = "Only JPG, PNG and JPEG  files are allowed!";
-            }
-            else {
-                $ImageName = $Updated_unique_image_name;
-                $result=bookUpdateQuery("Book_image", $ImageName,$connection,$bookID );
-                if ($result){
-                    if(move_uploaded_file($Updatedtmp_image, "cover/$ImageName")) {
-                        $success_msg = "You have successfully updated the book data"; 
-                        #header("location:editbook.php");          
-                    }                    
-                }
-                else
-                {
-                    $error = "The attempt was unsuccessfull.";      
-                }
-            }
+      $error = "Image size must be less than 1 MB";
+  }
+  elseif($UpdatedimageSize> 0 && $Updated_image_ext != 'jpg' && $Updated_image_ext != 'png' && $Updated_image_ext != 'jpeg')
+  {
+      $error = "Only JPG, PNG and JPEG  files are allowed!";
   }
 
   else {
+      if($ImageName!=$Updatedimage){
+        $ImageName = $Updated_unique_image_name;
+        $result=bookUpdateQuery("Book_image", $ImageName,$connection,$bookID );
+        move_uploaded_file($Updatedtmp_image, "cover/$ImageName");
+      }
       if ($UpdatedTitle != $Title){
           $Title = $UpdatedTitle;
           bookUpdateQuery("Title", $Title,$connection,$bookID );
@@ -112,14 +102,14 @@ if (isset($_POST['updateBook'])){
       if ( $UpdatedEmail  !=   $Email){
         $Email=  $UpdatedEmail  ;
         bookUpdateQuery("Email", $Email,$connection,$bookID );
-      } 
+      }
       if ($UpdatedNote  != $Note && strlen(  $UpdatedNote) >= 1 ){
         $Note= $UpdatedNote  ;
         bookUpdateQuery("Note", $Note,$connection,$bookID );
       }
-      
+
       $getbookdata = mysqli_query($connection,"Select * from  books where Book_id= '$bookID'");
-      $success_msg = "You have successfully updated the book data";   
+      $success_msg = "You have successfully updated the book data";
     }
 }
 
@@ -185,7 +175,7 @@ if (isset($_POST['Cancel'])){
     <main class="flex-shrink-0">
       <div class="container py-4 container-fluid">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-          <h1 class="h2">Edit Book Information</h1>          
+          <h1 class="h2">Edit Book Information</h1>
         </div>
         <div class="row">
           <?php
@@ -205,12 +195,12 @@ if (isset($_POST['Cancel'])){
                   <input type="file" class="form-control" id="bookCover" name ="updatedImage">
                 </td>
               </tr>
-              <tr>  
+              <tr>
                 <td><label class="col-sm-7 control-label" style="text-align: left;" >Book Title</label></td>
                 <td><input type="text" class="form-control" value="<?php echo $Title ; ?>" name="updatedTitle"></td>
 
                 <?php
-                 
+
                   echo "<td><input type=\"text\" style=\"display:none\" name=\"selectedBookId\" value='$bookID' name=\"updatedTitle\" ></td>";
                 ?>
               </tr>
@@ -234,7 +224,7 @@ if (isset($_POST['Cancel'])){
               <tr>
                 <td><label class="col-sm-7 control-label" for="BookStatus" style="text-align: left;" name="BookStatus">Book Status</label></td>
                 <td>
-                  <select class="form-control" id="BookStatus" name="updatedBookStatus">                  
+                  <select class="form-control" id="BookStatus" name="updatedBookStatus">
                   <option value="1"<?php if($status=="1") echo 'selected="selected"'; ?>>Available</option>
                   <option value="0"<?php if($status=="0") echo 'selected="selected"'; ?>>Not Available</option>
 
@@ -249,19 +239,19 @@ if (isset($_POST['Cancel'])){
                   <td><label class="col-sm-7 control-label" style="text-align: left;" for="bookCover">Phone</label></td>
                   <td><input type="text" class="form-control" id="bookCover" value="<?php echo $Phonenumber ;?>" name="updatedPhone"></td>
                 </tr>
-              <tr>  
+              <tr>
                 <td><label class="col-sm-7 control-label" style="text-align: left;">Email</label></td>
                 <td><input type="email" class="form-control" value="<?php echo $Email ;?>" name="updatedEmail"></td>
               </tr>
               <tr>
                 <td><label class="col-sm-7 control-label" style="text-align: left;" for="pickupNote">Note</label></td>
                 <td><textarea class="form-control" id="pickupNote" rows="3"  name="updatedNote"><?php echo $Note ;?></textarea></td>
-              </tr>            
+              </tr>
             </table>
-            <input type="submit" name="updateBook" style="background-image: url('Images/update.png'); border:none; background-repeat:no-repeat; width:200px;height:50px;" value="Update" /><br/><br/>          
+            <input type="submit" name="updateBook" style="background-image: url('Images/update.png'); border:none; background-repeat:no-repeat; width:200px;height:50px;" value="Update" /><br/><br/>
             <input type="submit" name="Cancel" style="background-image: url('Images/update.png'); border:none; background-repeat:no-repeat; width:200px;height:50px;" value="Cancel" /><br/>
           </form>
-          <br>          
+          <br>
         </div>
       </div>
     </main>
