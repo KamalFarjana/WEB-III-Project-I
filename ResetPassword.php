@@ -17,9 +17,8 @@ if(isset($_POST['Submit'])){
                     if(strlen($New_Password)>7){
                         $new_hashed_password=md5($New_Password);
                         mysqli_query($connection," UPDATE registered_user SET Password='$new_hashed_password' WHERE Email='" . $_SESSION['email'] . "'");
-                    
                       #closing the session as email is saved to session email
-                       include("Signout.php");
+                        include("Signout.php");
                         echo ("<script LANGUAGE='JavaScript'>window.alert('Succesfully Updated');window.location.href='signin.php';</script>");
                     }
                    else{
