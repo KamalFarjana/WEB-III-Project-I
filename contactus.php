@@ -16,8 +16,6 @@ require 'vendor/autoload.php';
 require '.\vendor\phpmailer\phpmailer\src\Exception.php';
 require '.\vendor\phpmailer\phpmailer\src\SMTP.php';
 require '.\vendor\phpmailer\phpmailer\src\PHPMailer.php';
-require 'C:\xampp\htdocs\Web_De\vendor\phpmailer\phpmailer\src\PHPMailer.php';
-
 // Initialize PHP mailer, configure to use SMTP protocol and add credentials
 
 

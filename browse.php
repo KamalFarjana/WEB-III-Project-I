@@ -5,7 +5,7 @@ error_reporting(E_ALL);
 include("connect.php");
 include("function.php");
 $error="";
-$result = mysqli_query($connection, "select * from books");
+$result = mysqli_query($connection, "select * from books where status=1");
 if(isset($_GET['Search'])){
   if(empty($_GET['search']) && empty($_GET['SearchType'])){
     $error="Please type something and select a type for your search";
@@ -15,13 +15,13 @@ if(isset($_GET['Search'])){
    if(!empty($_GET['SearchType'])){
        $SearchType=$_GET['SearchType'];
        if($SearchType=="Author"){
-         $result = mysqli_query($connection, "select * from books WHERE (`Author` LIKE '%".$query."%') ");
+         $result = mysqli_query($connection, "select * from books WHERE status=1 AND (`Author` LIKE '%".$query."%') ");
        }
        elseif($SearchType=="Title"){
-         $result = mysqli_query($connection, "select * from books WHERE (`Title` LIKE '%".$query."%') ");
+         $result = mysqli_query($connection, "select * from books WHERE status=1 AND  (`Title` LIKE '%".$query."%') ");
        }
        elseif($SearchType=="ISBN"){
-         $result = mysqli_query($connection, "select * from books WHERE (`ISBN` LIKE '%".$query."%') ");
+         $result = mysqli_query($connection, "select * from books WHERE status=1 AND  (`ISBN` LIKE '%".$query."%') ");
        }
    }
    else{
@@ -78,17 +78,6 @@ if(isset($_GET['Search'])){
             </li>
           </ul>
           <ul class="navbar-nav navbar-right">
-<<<<<<< Updated upstream
-                <li><a class="nav-link">Last Login <b>March 31, 2021</b>.</a></li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false">dwarfplanet</a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdown04">
-                        <li><a class="dropdown-item" href="myprofile.php">My Profile</a></li>
-                        <li><a class="dropdown-item" href="myinventory.php">My Inventory</a></li>
-                        <li><a class="dropdown-item" href="Signout.php">Sign Out</a></li>
-                    </ul>
-                </li>
-=======
           <?php if(logged_in()){ ?>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false">dwarfplanet</a>
@@ -102,7 +91,6 @@ if(isset($_GET['Search'])){
             <li><a class="nav-link" href="signup.php">Register</a></li>
             <li><a class="nav-link" href="signin.php">Sign In</a></li>
           <?php } ?>
->>>>>>> Stashed changes
           </ul>
         </div>
       </div>
