@@ -22,7 +22,7 @@ $result = mysqli_query($connection, "select * from faq");
 <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
       <div class="container-fluid">
-        <a class="navbar-brand" href="index.html">Book Xchange</a>
+        <a class="navbar-brand" href="index.php">Book Xchange</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -32,22 +32,22 @@ $result = mysqli_query($connection, "select * from faq");
               <a class="nav-link " aria-current="page" href="index.php">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link " href="aboutus.html">About Us</a>
+              <a class="nav-link " href="aboutus.php">About Us</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="browse.html">Browse Books</a>
+              <a class="nav-link" href="browse.php">Browse Books</a>
             </li>
             <li class="nav-item">
               <a class="nav-link active" aria-current="page"  href="faq.php">FAQ</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link " href="contactus.html">Contact Us</a>
+              <a class="nav-link " href="contactus.php">Contact Us</a>
             </li>
 
           </ul>
           <ul class="nav-item navbar-nav navbar-right">
-            <li><a class="nav-link active" href="signup.php">Register</a></li>
-            <li><a class="nav-link active" href="signin.php">Sign In</a></li>
+            <li><a class="nav-link" href="signup.php">Register</a></li>
+            <li><a class="nav-link" href="signin.php">Sign In</a></li>
           </ul>
         </div>
       </div>
@@ -66,7 +66,7 @@ $result = mysqli_query($connection, "select * from faq");
                             echo "<div class=\"card\">";
                             echo "<div class=\"card-header p-2\" id=\"headingOne\">";
                             echo "<h5 class=\"mb-0\">";
-                            echo "<button class=\"btn btn-link\" type=\"button\" data-toggle=\"collapse\" data-target=\"#collapseOne\" aria-expanded=\"true\" aria-controls=\"collapseOne\">";
+                            echo "<button class=\"btn\" type=\"button\" data-toggle=\"collapse\" data-target=\"#collapseOne\" aria-expanded=\"true\" aria-controls=\"collapseOne\">";
                             echo "Q: ".$row[1];
                             echo "</button>";
                             echo "</h5>";
@@ -89,7 +89,7 @@ $result = mysqli_query($connection, "select * from faq");
 
     <footer class="footer bg-dark mt-auto py-3 bg-light">
       <div class="container">
-          <p class="text-light">copyright © 2021 bookxchange.ca</p>
+          <p class="text-light">copyright © 2022 bookxchange.ca</p>
       </div>
   </footer>
   <script src="Assets/bootstrap.bundle.min.js"></script>

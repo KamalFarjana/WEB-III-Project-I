@@ -49,7 +49,7 @@ if(isset($_GET['Search'])){
 <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
       <div class="container-fluid">
-        <a class="navbar-brand" href="index.html">Book Xchange</a>
+        <a class="navbar-brand" href="index.php">Book Xchange</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -138,7 +138,7 @@ if(isset($_GET['Search'])){
            }
            else{
              while($row = mysqli_fetch_array($result)) {
-               $userId = $row[6];
+               $userId = $row[7];
                $bookId = $row[0];
                $firstName = '';
                $lastName = '';
@@ -148,21 +148,23 @@ if(isset($_GET['Search'])){
                  $lastName = $userRow['LastName'];
                }
                echo "<div class=\"card col-xs-12 col-sm-6 col-md-3\">";
-               echo "<img src=\"Images/book-cover.jpg\" class=\"card-img-top\" alt=\"1984\"/>";
+               echo "<img src=\"cover/".$row[6]."\" class=\"card-img-top\"/>";
                echo "<div class=\"card-body\">";
                echo "<h5 class=\"card-title\">".$row[1]."</h5>";
                echo "<p class=\"card-text\">".$row[2]."</p>";
                echo "</div>";
                echo "<div class=\"card-body\">";
                echo "<form method=\"post\" action=\"viewbook.php\">";
-               echo "<input type=\"text\" name=\"selectedBookId\" style=\"display:none\" value='$bookId'>";
+               echo "<input type=\"text\" name=\"selectedBookId\" class=\"btn btn-primary btn-lg\" style=\"display:none\" value='$bookId'>";
                // echo "<a href=\"viewbook.php?id=$bookId\" class=\"card-link\">View Book</a>";
                echo "<button type=\"submit\" class=\"card-link\">View Book</button>";
                echo "</form>";
                echo "</div>";
+               if(logged_in()){
                echo "<div class=\"card-footer\">";
-               echo "<small class=\"text-muted\">Posted by <a href=\"myprofile.php\">".$firstName." ".$lastName."</a><br>Posted on ".date('d-M-yy',strtotime($row[11]))."</small>";
+               echo "<small class=\"text-muted\">Posted by ".$firstName." ".$lastName."<br>Posted on ".date('d-M-y',strtotime($row[12]))."</small>";
                echo "</div>";
+               }
                echo "</div>";
              }
            }

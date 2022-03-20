@@ -112,13 +112,13 @@ if(logged_in()){
               echo "</ul>";
               echo "<li style=\"display:inline-block; padding: 5px;\">";
               echo "<form method=\"POST\" action=\"editbook.php\">";
-              echo "<input type=\"text\" name=\"selectedBookId\" style=\"display:none\" value='$bookId'>";
+              echo "<input type=\"text\" name=\"selectedBookId\" class=\"btn btn-primary btn-lg\" style=\"display:none\" value='$bookId'>";
               echo "<button type=\"submit\" class=\"card-link\">Edit</button>";
               echo "</form>";
               echo "</ul>";
               echo "<li style=\"display:inline-block; padding: 5px;\">";
               echo "<form method=\"POST\" action=\"removebook.php\">";
-              echo "<input type=\"text\" name=\"selectedBookId\" style=\"display:none\" value='$bookId'>";
+              echo "<input type=\"text\" name=\"selectedBookId\" class=\"btn btn-primary btn-lg\" style=\"display:none\" value='$bookId'>";
               echo "<button type=\"submit\" class=\"card-link\">Remove</button>";
               echo "</form>";
               echo "</li>";

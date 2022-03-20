@@ -33,6 +33,7 @@ $result = mysqli_query($connection, "select * from books where Book_id='$bookId'
     $bookISBN=$row['ISBN'];
     $bookGenre=$row['Genre'];
     $bookCondition=$row['Condition'];
+    $bookImage=$row['Book_image'];
     $userId=$row['User_id'];
     $addedDate=$row['AddedDate'];
     $userPhone=$row['PhoneNumber'];
@@ -60,7 +61,7 @@ $userProfile = mysqli_query($connection, "select * from registered_user where Us
 <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
       <div class="container-fluid">
-        <a class="navbar-brand" href="index.html">Book Xchange</a>
+        <a class="navbar-brand" href="index.php">Book Xchange</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -112,7 +113,10 @@ $userProfile = mysqli_query($connection, "select * from registered_user where Us
         
         <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-3 viewbook">
-          <img src="Images/book-cover.jpg" class="card-img-top" alt="book1"/>
+          <?php
+            echo "<img src=\"cover/".$bookImage."\" class=\"card-img-top\" alt=\"$bookImage\"/>";
+           ?>
+
         </div>
         <div class="card col-xs-12 col-sm-6 col-md-8 viewbook align-items-start">
           <?php
@@ -123,11 +127,13 @@ $userProfile = mysqli_query($connection, "select * from registered_user where Us
             echo "<p class=\"card-text\"><b>Genre</b>: ".$bookGenre."</p>";
             echo "<p class=\"card-text\"><b>Condition</b>：".$bookCondition."</p>";
             echo "<hr>";
+            if(logged_in()){
             echo "<h5 class=\"card-title\">Pickup Details</h5>";
-            echo "<p class=\"card-text\"><i>Posted by ".$firstName." ".$lastName." on ".date('d-M-yy',strtotime($addedDate))."</i></p>";
+            echo "<p class=\"card-text\"><i>Posted by ".$firstName." ".$lastName." on ".date('d-M-y',strtotime($addedDate))."</i></p>";
             echo "<p class=\"card-text\"><b>Phone</b>: ".$userPhone."</p>";
             echo "<p class=\"card-text\"><b>Email</b>: ".$userEmail."</p>";
             echo "<p class=\"card-text\"><b>Note</b>: ".$userNote."</p>";
+          }
           ?>
               <!-- <h5 class="card-title">Book Details</h5>
               <p class="card-text"><b>Title</b>: 1984</p>
@@ -147,11 +153,6 @@ $userProfile = mysqli_query($connection, "select * from registered_user where Us
       </div>
       </main>
 
-      <footer class="footer bg-dark mt-auto py-3 bg-light">
-        <div class="container">
-            <p class="text-light">copyright © 2021 bookxchange.ca</p>
-        </div>
-    </footer>
-    <script src="Assets/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+      <?php 
+  require_once "footer.php";
+?>

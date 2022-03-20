@@ -61,7 +61,7 @@
                 You give your books you no longer need in exchange for book you really want. 
                 We strive to make a platform where locals exchange books and try to contribute to the community.</p>
             <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                <a href="faq.php" ><img src="Images/faq.png" alt="FAQButton" style="width:200px;height:60px;"></a>
+                <a href="faq.php" ><button class="btn btn-primary btn-lg">FAQs</button></a>
             </div>
           </div>
         </div>
