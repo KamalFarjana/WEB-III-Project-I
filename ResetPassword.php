@@ -65,6 +65,11 @@ if(isset($_POST['Submit'])){
             <li class="nav-item">
               <a class="nav-link" href="browse.html">Browse Books</a>
             </li>
+            <?php if(logged_in()){ ?>
+            <li class="nav-item">
+                <a class="nav-link" href="addbook.php">Add Book</a>
+            </li>
+           <?php } ?>
             <li class="nav-item">
               <a class="nav-link" href="faq.php">FAQ</a>
             </li>

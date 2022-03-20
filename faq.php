@@ -37,6 +37,11 @@ $result = mysqli_query($connection, "select * from faq");
             <li class="nav-item">
               <a class="nav-link" href="browse.html">Browse Books</a>
             </li>
+            <?php if(logged_in()){ ?>
+            <li class="nav-item">
+                <a class="nav-link" href="addbook.php">Add Book</a>
+            </li>
+           <?php } ?>
             <li class="nav-item">
               <a class="nav-link active" aria-current="page"  href="faq.php">FAQ</a>
             </li>
@@ -46,8 +51,24 @@ $result = mysqli_query($connection, "select * from faq");
 
           </ul>
           <ul class="nav-item navbar-nav navbar-right">
+<<<<<<< Updated upstream
             <li><a class="nav-link active" href="signup.php">Register</a></li>
             <li><a class="nav-link active" href="signin.php">Sign In</a></li>
+=======
+          <?php if(logged_in()){ ?>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false">dwarfplanet</a>
+                <ul class="dropdown-menu" aria-labelledby="dropdown04">
+                    <li><a class="dropdown-item" href="myprofile.php">My Profile</a></li>
+                    <li><a class="dropdown-item" href="myinventory.php">My Inventory</a></li>
+                    <li><a class="dropdown-item" href="Signout.php">Sign Out</a></li>
+                </ul>
+            </li>
+          <?php } else{ ?>
+            <li><a class="nav-link" href="signup.php">Register</a></li>
+            <li><a class="nav-link" href="signin.php">Sign In</a></li>
+          <?php } ?>
+>>>>>>> Stashed changes
           </ul>
         </div>
       </div>

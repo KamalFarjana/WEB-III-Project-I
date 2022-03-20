@@ -21,7 +21,8 @@ $result = mysqli_query($connection, "select * from books");
 
     <title>Browse Books | Book Xchange</title>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
+
     <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
       <div class="container-fluid">
         <a class="navbar-brand" href="index.html">Book Xchange</a>
@@ -51,6 +52,7 @@ $result = mysqli_query($connection, "select * from books");
           </ul>
 
           <ul class="navbar-nav navbar-right">
+<<<<<<< Updated upstream
                 <li><a class="nav-link">Last Login <b>March 31, 2021</b>.</a></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false">dwarfplanet</a>
@@ -60,6 +62,21 @@ $result = mysqli_query($connection, "select * from books");
                         <li><a class="dropdown-item" href="index.html">Sign Out</a></li>
                     </ul>
                 </li>
+=======
+          <?php if(logged_in()){ ?>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false">dwarfplanet</a>
+                <ul class="dropdown-menu" aria-labelledby="dropdown04">
+                    <li><a class="dropdown-item" href="myprofile.php">My Profile</a></li>
+                    <li><a class="dropdown-item" href="myinventory.php">My Inventory</a></li>
+                    <li><a class="dropdown-item" href="Signout.php">Sign Out</a></li>
+                </ul>
+            </li>
+          <?php } else{ ?>
+            <li><a class="nav-link" href="signup.php">Register</a></li>
+            <li><a class="nav-link" href="signin.php">Sign In</a></li>
+          <?php } ?>
+>>>>>>> Stashed changes
           </ul>
         </div>
       </div>
@@ -145,7 +162,7 @@ $result = mysqli_query($connection, "select * from books");
 
       <footer class="footer bg-dark mt-auto py-3 bg-light">
         <div class="container">
-            <p class="text-light">copyright © 2021 bookxchange.ca</p>
+            <p class="text-light">copyright © 2022 bookxchange.ca</p>
         </div>
     </footer>
     <script src="Assets/bootstrap.bundle.min.js"></script>

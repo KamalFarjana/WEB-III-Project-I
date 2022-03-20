@@ -1,3 +1,28 @@
+<<<<<<< Updated upstream
+=======
+<?php
+ include('session.php');
+ function logged_in(){
+   if(isset($_SESSION['email'])){
+     return true;
+   }
+   else{
+     return false;
+   }
+ }
+?>
+<?php
+$sql="SELECT * FROM registered_user WHERE Email='$user_check'";
+$result=mysqli_query($connection,$sql);
+?>
+<?php if(logged_in()){ ?>
+<?php
+while($rows=mysqli_fetch_array($result)){
+   $imageSrc = '/Images/profile' . '/'. $rows['Image'];
+
+?>
+
+>>>>>>> Stashed changes
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,9 +53,11 @@
             <li class="nav-item">
               <a class="nav-link" href="browse.html">Browse Books</a>
             </li>
+            <?php if(logged_in()){ ?>
             <li class="nav-item">
                 <a class="nav-link" href="addbook.html">Add Book</a>
             </li>
+           <?php } ?>
             <li class="nav-item">
               <a class="nav-link" href="faq.html">FAQ</a>
             </li>
@@ -208,7 +235,7 @@
       
       <footer class="footer bg-dark mt-auto py-3 bg-light">
         <div class="container">
-            <p class="text-light">copyright © 2021 bookxchange.ca</p>
+            <p class="text-light">copyright © 2022 bookxchange.ca</p>
         </div>
     </footer>
     <script src="Assets/bootstrap.bundle.min.js"></script>

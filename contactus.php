@@ -1,5 +1,9 @@
 <?php
-
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+include("connect.php");
+include("function.php");
 // Include packages and files for PHPMailer and SMTP protoc
 $connection = mysqli_connect("localhost","root","","book_exchange");
 if(mysqli_connect_errno()){
@@ -7,10 +11,18 @@ if(mysqli_connect_errno()){
 }
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+<<<<<<< Updated upstream
 
 require 'C:\xampp\htdocs\Web_De\vendor\phpmailer\phpmailer\src\Exception.php';
 require 'C:\xampp\htdocs\Web_De\vendor\phpmailer\phpmailer\src\PHPMailer.php';
 require 'C:\xampp\htdocs\Web_De\vendor\phpmailer\phpmailer\src\SMTP.php';
+=======
+use PHPMailer\PHPMailer\SMTP;
+require 'vendor/autoload.php';
+require '.\vendor\phpmailer\phpmailer\src\Exception.php';
+require '.\vendor\phpmailer\phpmailer\src\SMTP.php';
+require '.\vendor\phpmailer\phpmailer\src\PHPMailer.php';
+>>>>>>> Stashed changes
 
 // Initialize PHP mailer, configure to use SMTP protocol and add credentials
 
@@ -89,7 +101,7 @@ catch (Exception $e) {
 
     <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
       <div class="container-fluid">
-        <a class="navbar-brand" href="index.html">Book Xchange</a>
+        <a class="navbar-brand" href="index.php">Book Xchange</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -104,6 +116,11 @@ catch (Exception $e) {
             <li class="nav-item">
               <a class="nav-link" href="browse.php">Browse Books</a>
             </li>
+            <?php if(logged_in()){ ?>
+            <li class="nav-item">
+                <a class="nav-link" href="addbook.php">Add Book</a>
+            </li>
+            <?php } ?>
             <li class="nav-item">
               <a class="nav-link" href="faq.php">FAQ</a>
             </li>
@@ -113,8 +130,19 @@ catch (Exception $e) {
 
           </ul>
           <ul class="nav-item navbar-nav navbar-right">
+          <?php if(logged_in()){ ?>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false">dwarfplanet</a>
+                <ul class="dropdown-menu" aria-labelledby="dropdown04">
+                    <li><a class="dropdown-item" href="myprofile.php">My Profile</a></li>
+                    <li><a class="dropdown-item" href="myinventory.php">My Inventory</a></li>
+                    <li><a class="dropdown-item" href="Signout.php">Sign Out</a></li>
+                </ul>
+            </li>
+          <?php } else{ ?>
+            <li><a class="nav-link" href="signup.php">Register</a></li>
             <li><a class="nav-link" href="signin.php">Sign In</a></li>
-            <li></li>
+          <?php } ?>
           </ul>
         </div>
       </div>
