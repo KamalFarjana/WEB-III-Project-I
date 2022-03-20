@@ -56,7 +56,7 @@ if(isset($_POST['AddBook'])){
   else if (strcmp($image_ext, $allowed_image_ext) !==0){
     $error = "Please upload jpg cover image for the book!";
   }
-  
+
 
   else
       {
@@ -130,7 +130,7 @@ if(logged_in()){
                 <ul class="dropdown-menu" aria-labelledby="dropdown04">
                     <li><a class="dropdown-item" href="myprofile.php">My Profile</a></li>
                     <li><a class="dropdown-item" href="myinventory.php">My Inventory</a></li>
-                    <li><a class="dropdown-item" href="index.php">Sign Out</a></li>
+                    <li><a class="dropdown-item" href="Signout.php">Sign Out</a></li>
                 </ul>
             </li>
       </ul>
@@ -158,7 +158,7 @@ if(logged_in()){
                   <td><label class="col-sm-7 control-label" style="text-align: left;" for="bookCover" name="BookCover">Book Cover</label></td>
                   <td><input type="file" class="form-control" id="BookCover" name="BookCover"></td>
                 </tr>
-              <tr>  
+              <tr>
                 <td><label class="col-sm-7 control-label" style="text-align: left;" name="BookTitle">Book Title</label></td>
                 <td><input type="text" class="form-control" placeholder="Enter book title" id="BookTitle" name="BookTitle"></td>
               </tr>
@@ -191,7 +191,7 @@ if(logged_in()){
                   <td><label class="col-sm-7 control-label" style="text-align: left;" name="PickupPhone">Phone No</label></td>
                   <td><input type="text" class="form-control" id="PickupPhone" placeholder="Enter your phone number" name="PickupPhone"></td>
                 </tr>
-              <tr>  
+              <tr>
                 <td><label class="col-sm-7 control-label" style="text-align: left;" name="PickupEmail">Email</label></td>
                 <td><input type="email" class="form-control" id="PickupEmail" placeholder="Enter your email address" name="PickupEmail"></td>
               </tr>
@@ -203,13 +203,13 @@ if(logged_in()){
 
             <input type="submit" name="AddBook" style="background: url('Images/submit.png'); border:none; background-repeat:no-repeat; width:200px;height:50px;" value="Add Book" />
             </form>
-          </div>  
+          </div>
 
-      
+
         </div>
       </main>
 
-      <?php 
+      <?php
   require_once "footer.php";
 }else{
   header("location: index.php");

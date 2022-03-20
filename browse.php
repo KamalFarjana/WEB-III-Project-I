@@ -64,9 +64,11 @@ if(isset($_GET['Search'])){
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="browse.php">Browse Books</a>
             </li>
+            <?php if(logged_in()){ ?>
             <li class="nav-item">
                 <a class="nav-link" href="addbook.php">Add Book</a>
             </li>
+           <?php } ?>
             <li class="nav-item">
               <a class="nav-link" href="faq.php">FAQ</a>
             </li>
@@ -81,7 +83,7 @@ if(isset($_GET['Search'])){
                     <ul class="dropdown-menu" aria-labelledby="dropdown04">
                         <li><a class="dropdown-item" href="myprofile.php">My Profile</a></li>
                         <li><a class="dropdown-item" href="myinventory.php">My Inventory</a></li>
-                        <li><a class="dropdown-item" href="index.php">Sign Out</a></li>
+                        <li><a class="dropdown-item" href="Signout.php">Sign Out</a></li>
                     </ul>
                 </li>
           </ul>
