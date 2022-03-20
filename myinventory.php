@@ -81,7 +81,7 @@ if(logged_in()){
                 <ul class="dropdown-menu" aria-labelledby="dropdown04">
                     <li><a class="dropdown-item" href="myprofile.php">My Profile</a></li>
                     <li><a class="dropdown-item active" href="myinventory.php">My Inventory</a></li>
-                    <li><a class="dropdown-item" href="index.php">Sign Out</a></li>
+                    <li><a class="dropdown-item" href="Signout.php">Sign Out</a></li>
                 </ul>
             </li>
       </ul>
