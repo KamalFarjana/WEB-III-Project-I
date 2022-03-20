@@ -14,7 +14,6 @@ if(isset($_POST['Submit'])&& $_POST['g-recaptcha-response']){
             $result=mysqli_query($connection,"select Password from registered_user where Email='$email'");
             $retrievedPassword=mysqli_fetch_assoc($result);
             if(md5($password)==$retrievedPassword['Password']){
-              $error="Password is correct!!!!";
               #this variable is for checking whether a user is login in or not
               $_SESSION['email']=$email;
               header("location: myprofile.php");
@@ -104,7 +103,7 @@ if(isset($_POST['Submit'])&& $_POST['g-recaptcha-response']){
           <p class="mt-5 mb-3">Not registered yet?
               <a class="nav-link belowformlink" href="signup.php">Sign Up</a>
               <br><br>
-              
+
               <a class="nav-link belowformlink" href="forgotpassword.php">Forgot password?</a></p>
           </div>
         </form>
