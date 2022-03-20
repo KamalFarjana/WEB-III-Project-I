@@ -9,6 +9,8 @@ $success_msg="";
 
 if(isset($_POST['AddBook'])){
   #variable_initialization
+  $email = $_SESSION['email'];
+
   $BookTitle = mysqli_real_escape_string($connection, $_POST['BookTitle']);
   $BookAuthor = mysqli_real_escape_string($connection, $_POST['BookAuthor']);
   $BookISBN = mysqli_real_escape_string($connection, $_POST['BookISBN']);
@@ -56,7 +58,7 @@ if(isset($_POST['AddBook'])){
 
   else
       {
-        $unique_image_name=$BookISBN.time().".".$extension_verification;
+        $unique_image_name=$email.time().".".$extension_verification;
         #Query to insert the user data into the DataBase
 
 
@@ -75,7 +77,7 @@ if(isset($_POST['AddBook'])){
       }
 
 }
-
+if(logged_in()){
 ?>
 
 <!DOCTYPE html>
@@ -207,4 +209,7 @@ if(isset($_POST['AddBook'])){
 
       <?php 
   require_once "footer.php";
+}else{
+  header("location: index.php");
+}
 ?>
