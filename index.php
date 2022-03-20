@@ -1,3 +1,11 @@
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+include("connect.php");
+include("function.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,14 +28,19 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
           <li class="nav-item">
-            <a class="nav-link" href="index.php">Home</a>
+            <a class="nav-link active" href="index.php">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="aboutus.html">About Us</a>
+            <a class="nav-link" href="aboutus.php">About Us</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="browse.php">Browse Books</a>
           </li>
+          <?php if(logged_in()){ ?>
+            <li class="nav-item">
+                <a class="nav-link" href="addbook.php">Add Book</a>
+            </li>
+           <?php } ?>
           <li class="nav-item">
             <a class="nav-link" href="faq.php">FAQ</a>
           </li>
@@ -37,8 +50,19 @@
 
         </ul>
         <ul class="nav-item navbar-nav navbar-right">
-          <li><a class="nav-link active" href="signup.php">Register</a></li>
-          <li><a class="nav-link active" href="signin.php">Sign In</a></li>
+          <?php if(logged_in()){ ?>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false">dwarfplanet</a>
+                <ul class="dropdown-menu" aria-labelledby="dropdown04">
+                    <li><a class="dropdown-item" href="myprofile.php">My Profile</a></li>
+                    <li><a class="dropdown-item" href="myinventory.php">My Inventory</a></li>
+                    <li><a class="dropdown-item" href="Signout.php">Sign Out</a></li>
+                </ul>
+            </li>
+          <?php } else{ ?>
+            <li><a class="nav-link" href="signup.php">Register</a></li>
+            <li><a class="nav-link" href="signin.php">Sign In</a></li>
+          <?php } ?>
         </ul>
       </div>
     </div>
@@ -59,7 +83,7 @@
           <div class="col-md-6">
             <div class="h-100 p-5 bg-light border rounded-3">
               <h2>Not a member yet?</h2>
-              <p><a href="signup.html">Join Now</a> (it's free!)</p>
+              <p><a href="signup.php">Join Now</a> (it's free!)</p>
             </div>
           </div>
         </div>
@@ -68,7 +92,7 @@
 
     <footer class="footer bg-dark mt-auto py-3 bg-light">
       <div class="container">
-          <p class="text-light">copyright © 2021 bookxchange.ca</p>
+          <p class="text-light">copyright © 2022 bookxchange.ca</p>
       </div>
   </footer>
   <script src="Assets/bootstrap.bundle.min.js"></script>

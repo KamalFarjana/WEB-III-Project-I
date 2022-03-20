@@ -124,7 +124,7 @@ if(logged_in()){
           </ul>
 
           <ul class="navbar-nav navbar-right">
-            <li><a class="nav-link">Last Login <b>March 31, 2021</b>.</a></li>
+          <?php if(logged_in()){ ?>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false">dwarfplanet</a>
                 <ul class="dropdown-menu" aria-labelledby="dropdown04">
@@ -133,6 +133,10 @@ if(logged_in()){
                     <li><a class="dropdown-item" href="Signout.php">Sign Out</a></li>
                 </ul>
             </li>
+          <?php } else{ ?>
+            <li><a class="nav-link" href="signup.php">Register</a></li>
+            <li><a class="nav-link" href="signin.php">Sign In</a></li>
+          <?php } ?>
       </ul>
         </div>
       </div>
