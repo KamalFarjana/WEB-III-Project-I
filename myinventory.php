@@ -12,7 +12,9 @@ $success_msg="";
 $email = $_SESSION['email'];
 
 $result=mysqli_query($connection,"SELECT * FROM registered_user WHERE Email='$email'");
+
 $row = mysqli_fetch_array($result);
+
 $user_id=$row['User_id'];
 
 $result_for_active = mysqli_query($connection, "select * from books where status=1 and User_Id = '$user_id' ");
@@ -94,7 +96,7 @@ if(logged_in()){
               <h1 class="h2">My Inventory</h1>
           </div>
 
-          <div class="row">            
+          <div class="row">
             <?php
               while($row = mysqli_fetch_array($result_for_active)) {
               $userId = $row[7];
@@ -139,7 +141,7 @@ if(logged_in()){
             <h1 class="h2">Inactive</h1>
         </div>
         <div class="row">
-        <div class="row">            
+        <div class="row">
             <?php
             while($row = mysqli_fetch_array($result_for_inactive)) {
               $userId = $row[6];
@@ -167,7 +169,7 @@ if(logged_in()){
       </div>
       </main>
 
-      <?php 
+      <?php
   require_once "footer.php";
 }else{
   header("location: index.php");
