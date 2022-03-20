@@ -45,7 +45,7 @@ if(logged_in()){
 
     <title>My Inventory | Book Xchange</title>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
     <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
       <div class="container-fluid">
         <a class="navbar-brand" href="index.php">Book Xchange</a>
@@ -63,9 +63,11 @@ if(logged_in()){
             <li class="nav-item">
               <a class="nav-link" href="browse.php">Browse Books</a>
             </li>
+            <?php if(logged_in()){ ?>
             <li class="nav-item">
                 <a class="nav-link" href="addbook.php">Add Book</a>
             </li>
+           <?php } ?>
             <li class="nav-item">
               <a class="nav-link" href="faq.php">FAQ</a>
             </li>
@@ -81,7 +83,7 @@ if(logged_in()){
                 <ul class="dropdown-menu" aria-labelledby="dropdown04">
                     <li><a class="dropdown-item" href="myprofile.php">My Profile</a></li>
                     <li><a class="dropdown-item active" href="myinventory.php">My Inventory</a></li>
-                    <li><a class="dropdown-item" href="index.php">Sign Out</a></li>
+                    <li><a class="dropdown-item" href="Signout.php">Sign Out</a></li>
                 </ul>
             </li>
       </ul>
@@ -168,9 +170,15 @@ if(logged_in()){
         </div>
       </div>
       </main>
-
+      <footer class="footer bg-dark mt-auto py-3 bg-light">
+      <div class="container">
+          <p class="text-light">copyright © 2022 bookxchange.ca</p>
+      </div>
+  </footer>
+  <script src="Assets/bootstrap.bundle.min.js"></script>
+</body>
+</html>
       <?php
-  require_once "footer.php";
 }else{
   header("location: index.php");
 }

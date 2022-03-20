@@ -74,11 +74,13 @@ $userProfile = mysqli_query($connection, "select * from registered_user where Us
               <a class="nav-link" href="aboutus.php">About Us</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="browse.php">Browse Books</a>
+              <a class="nav-link active" href="browse.php">Browse Books</a>
             </li>
+            <?php if(logged_in()){ ?>
             <li class="nav-item">
                 <a class="nav-link" href="addbook.php">Add Book</a>
             </li>
+            <?php } ?>
             <li class="nav-item">
               <a class="nav-link" href="faq.php">FAQ</a>
             </li>
@@ -88,13 +90,20 @@ $userProfile = mysqli_query($connection, "select * from registered_user where Us
           </ul>
 
           <ul class="navbar-nav navbar-right">
-            <li><a class="nav-link">Last Login <b>March 31, 2021</b>.</a></li>
+          <?php if(logged_in()){ ?>
+
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false">dwarfplanet</a>
                 <ul class="dropdown-menu" aria-labelledby="dropdown04">
                     <li><a class="dropdown-item" href="myprofile.php">My Profile</a></li>
                     <li><a class="dropdown-item" href="myinventory.php">My Inventory</a></li>
-                    <li><a class="dropdown-item" href="signout.php">Sign Out</a></li>
+                    <li><a class="dropdown-item" href="Signout.php">Sign Out</a></li>
+                </ul>
+            </li>
+          <?php } else{ ?>
+            <li><a class="nav-link" href="signup.php">Register</a></li>
+            <li><a class="nav-link" href="signin.php">Sign In</a></li>
+          <?php } ?>
                 </ul>
             </li>
       </ul>
@@ -152,7 +161,11 @@ $userProfile = mysqli_query($connection, "select * from registered_user where Us
 
       </div>
       </main>
-
-      <?php 
-  require_once "footer.php";
-?>
+      <footer class="footer bg-dark mt-auto py-3 bg-light">
+        <div class="container">
+            <p class="text-light">copyright © 2022 bookxchange.ca</p>
+        </div>
+    </footer>
+    <script src="Assets/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,7 +1,5 @@
 
   <?php
-
-   include ('connect.php');
    include('session.php');
    function logged_in(){
      if(isset($_SESSION['email'])){
@@ -186,9 +184,11 @@
               <li class="nav-item">
                 <a class="nav-link" href="browse.php">Browse Books</a>
               </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="addbook.php">Add Book</a>
-              </li>
+              <?php if(logged_in()){ ?>
+            <li class="nav-item">
+                <a class="nav-link" href="addbook.php">Add Book</a>
+            </li>
+           <?php } ?>
               <li class="nav-item">
                 <a class="nav-link" href="faq.php">FAQ</a>
               </li>
@@ -198,7 +198,6 @@
             </ul>
 
             <ul class="navbar-nav navbar-right">
-              <li><a class="nav-link">Last Login <b>March 31, 2021</b>.</a></li>
               <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false"><?php echo $rows['UserName']; ?></a>
                   <ul class="dropdown-menu" aria-labelledby="dropdown04">
@@ -336,7 +335,6 @@
       <?php if ($responses): ?>
         <p class="responses"><?php echo implode("<br>", $responses); ?></p>
       <?php endif; ?>
-
       </div>
       <br><br>
       </main>
@@ -344,7 +342,7 @@
   </form>
   <footer class="footer bg-dark mt-auto py-3 bg-light">
     <div class="container">
-        <p class="text-light">copyright © 2021 bookxchange.ca</p>
+        <p class="text-light">copyright © 2022 bookxchange.ca</p>
     </div>
   </footer>
   <script src="Assets/bootstrap.bundle.min.js"></script>

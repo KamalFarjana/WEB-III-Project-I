@@ -6,115 +6,116 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 $error = "";
 $success_msg = "";
+if(logged_in()){
+  if($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST))
+  {
+      $bookID = $_POST['selectedBookId'];
+      $getbookdata = mysqli_query($connection,"Select * from  books where Book_id= '$bookID' ");
+      $retrivebookdata = mysqli_fetch_array ($getbookdata);
 
-if($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST))
-{
+      #storing book data retrived from the database
+      $BookID = $retrivebookdata[0];
+      $Title = $retrivebookdata[1];
+      $Author = $retrivebookdata[2];
+      $Isbn = $retrivebookdata[3];
+      $Genre = $retrivebookdata[4];
+      $Condition=  $retrivebookdata[5];
+      $ImageName= $retrivebookdata[6];
+      $status = $retrivebookdata[8];
+      $Phonenumber=  $retrivebookdata[9];
+      $Email=  $retrivebookdata[10];
+      $Note=  $retrivebookdata[11];
+  }
+  #get book data for catch bookID from database
+
+  if (isset($_POST['updateBook'])){
+    #initializing the variable
     $bookID = $_POST['selectedBookId'];
-    $getbookdata = mysqli_query($connection,"Select * from  books where Book_id= '$bookID' ");
-    $retrivebookdata = mysqli_fetch_array ($getbookdata);
+    $UpdatedTitle = $_POST['updatedTitle'];
+    $UpdatedAuthor = $_POST['updatedAuthor'];
+    $UpdatedISBN = $_POST['updatedISBN'];
+    $UpdatedGenre = $_POST['updatedGenre'];
+    $updatedBookStatus = $_POST['updatedBookStatus'];
+    $UpdatedPhone = $_POST['updatedPhone'];
+    $UpdatedEmail = $_POST['updatedEmail'];
+    $UpdatedNote = $_POST['updatedNote'];
+    $Updatedimage = $_FILES['updatedImage']['name'];
+    $Updatedtmp_image = $_FILES['updatedImage']['tmp_name'];
+    $UpdatedimageSize = $_FILES ['updatedImage']['size'];
+    #$UpdatedAllowed_image_ext = array('jpg','png','jpge');
+    $Updated_div_image = explode(".", $Updatedimage); #seperate name, ext
+    $Updated_image_ext = end($Updated_div_image); #get extention
+    $uploadDate=date("dmYHis_");
+    $Updated_unique_image_name = $uploadDate.$Title.".".$Updated_image_ext; #generate unique name
 
-    #storing book data retrived from the database
-    $BookID = $retrivebookdata[0];
-    $Title = $retrivebookdata[1];
-    $Author = $retrivebookdata[2];
-    $Isbn = $retrivebookdata[3];
-    $Genre = $retrivebookdata[4];
-    $Condition=  $retrivebookdata[5];
-    $ImageName= $retrivebookdata[6];
-    $status = $retrivebookdata[8];
-    $Phonenumber=  $retrivebookdata[9];
-    $Email=  $retrivebookdata[10];
-    $Note=  $retrivebookdata[11];
-}
-#get book data for catch bookID from database
-
-if (isset($_POST['updateBook'])){
-  #initializing the variable
-  $bookID = $_POST['selectedBookId'];
-  $UpdatedTitle = $_POST['updatedTitle'];
-  $UpdatedAuthor = $_POST['updatedAuthor'];
-  $UpdatedISBN = $_POST['updatedISBN'];
-  $UpdatedGenre = $_POST['updatedGenre'];
-  $updatedBookStatus = $_POST['updatedBookStatus'];
-  $UpdatedPhone = $_POST['updatedPhone'];
-  $UpdatedEmail = $_POST['updatedEmail'];
-  $UpdatedNote = $_POST['updatedNote'];
-  $Updatedimage = $_FILES['updatedImage']['name'];
-  $Updatedtmp_image = $_FILES['updatedImage']['tmp_name'];
-  $UpdatedimageSize = $_FILES ['updatedImage']['size'];
-  #$UpdatedAllowed_image_ext = array('jpg','png','jpge');
-  $Updated_div_image = explode(".", $Updatedimage); #seperate name, ext
-  $Updated_image_ext = end($Updated_div_image); #get extention
-  $uploadDate=date("dmYHis_");
-  $Updated_unique_image_name = $uploadDate.$Title.".".$Updated_image_ext; #generate unique name
-
-  if($UpdatedTitle == $Title && $UpdatedAuthor == $Author && $UpdatedISBN == $Isbn && $UpdatedGenre == $Genre &&
-  $updatedBookStatus == $status && $UpdatedPhone == $Phonenumber && $UpdatedEmail == $Email && $UpdatedNote == $Note
-  && $UpdatedimageSize == 0 ){
-      $error = "You have not change any filed to be updated";
-  }
-  elseif(strlen($UpdatedTitle )==0 || strlen($UpdatedAuthor) ==0 || strlen($UpdatedISBN) == 0 || strlen($UpdatedGenre) == 0 || strlen($updatedBookStatus) == 0 )
-  {
-    $error = "Book details cannot be empty";
-  }
-  else if (strlen($UpdatedPhone) < 1 && strlen($UpdatedEmail) < 1){
-    $error = "Please enter either phone number or email for pickup details!";
-  }
-  elseif($UpdatedimageSize> 0 && $UpdatedimageSize > 1048576)
-  {
-      $error = "Image size must be less than 1 MB";
-  }
-  elseif($UpdatedimageSize> 0 && $Updated_image_ext != 'jpg' && $Updated_image_ext != 'png' && $Updated_image_ext != 'jpeg')
-  {
-      $error = "Only JPG, PNG and JPEG  files are allowed!";
-  }
-
-  else {
-      if($ImageName!=$Updatedimage){
-        $ImageName = $Updated_unique_image_name;
-        $result=bookUpdateQuery("Book_image", $ImageName,$connection,$bookID );
-        move_uploaded_file($Updatedtmp_image, "cover/$ImageName");
-      }
-      if ($UpdatedTitle != $Title){
-          $Title = $UpdatedTitle;
-          bookUpdateQuery("Title", $Title,$connection,$bookID );
-      }
-      if ($UpdatedAuthor != $Author ){
-          $Author= $UpdatedAuthor ;
-          bookUpdateQuery("Author", $Author,$connection,$bookID );
-      }
-      if ($UpdatedISBN != $Isbn){
-        $Isbn= $UpdatedISBN  ;
-        bookUpdateQuery("ISBN", $Isbn,$connection,$bookID );
-      }
-      if ($UpdatedGenre != $Genre){
-        $Genre= $UpdatedGenre ;
-        bookUpdateQuery("Genre", $Genre,$connection,$bookID );
-      }
-      if ($updatedBookStatus != $status){
-        $status= $updatedBookStatus ;
-        bookUpdateQuery("Status", $status,$connection,$bookID );
-      }
-      if ($UpdatedPhone  !=   $Phonenumber){
-        $Phonenumber= $UpdatedPhone  ;
-        bookUpdateQuery("PhoneNumber", $Phonenumber,$connection,$bookID );
-      }
-      if ( $UpdatedEmail  !=   $Email){
-        $Email=  $UpdatedEmail  ;
-        bookUpdateQuery("Email", $Email,$connection,$bookID );
-      }
-      if ($UpdatedNote  != $Note && strlen(  $UpdatedNote) >= 1 ){
-        $Note= $UpdatedNote  ;
-        bookUpdateQuery("Note", $Note,$connection,$bookID );
-      }
-
-      $getbookdata = mysqli_query($connection,"Select * from  books where Book_id= '$bookID'");
-      $success_msg = "You have successfully updated the book data";
+    if($UpdatedTitle == $Title && $UpdatedAuthor == $Author && $UpdatedISBN == $Isbn && $UpdatedGenre == $Genre &&
+    $updatedBookStatus == $status && $UpdatedPhone == $Phonenumber && $UpdatedEmail == $Email && $UpdatedNote == $Note
+    && $UpdatedimageSize == 0 ){
+        $error = "You have not change any filed to be updated";
     }
-}
+    elseif(strlen($UpdatedTitle )==0 || strlen($UpdatedAuthor) ==0 || strlen($UpdatedISBN) == 0 || strlen($UpdatedGenre) == 0 || strlen($updatedBookStatus) == 0 )
+    {
+      $error = "Book details cannot be empty";
+    }
+    else if (strlen($UpdatedPhone) < 1 && strlen($UpdatedEmail) < 1){
+      $error = "Please enter either phone number or email for pickup details!";
+    }
+    elseif($UpdatedimageSize> 0 && $UpdatedimageSize > 1048576)
+    {
+        $error = "Image size must be less than 1 MB";
+    }
+    elseif($UpdatedimageSize> 0 && $Updated_image_ext != 'jpg' && $Updated_image_ext != 'png' && $Updated_image_ext != 'jpeg')
+    {
+        $error = "Only JPG, PNG and JPEG  files are allowed!";
+    }
 
-if (isset($_POST['Cancel'])){
-  header ("location:myinventory.php");}
+    else {
+        if($UpdatedimageSize>0){
+          $ImageName = $Updated_unique_image_name;
+          $result=bookUpdateQuery("Book_image", $ImageName,$connection,$bookID );
+          move_uploaded_file($Updatedtmp_image, "cover/$ImageName");
+        }
+        if ($UpdatedTitle != $Title){
+            $Title = $UpdatedTitle;
+            bookUpdateQuery("Title", $Title,$connection,$bookID );
+        }
+        if ($UpdatedAuthor != $Author ){
+            $Author= $UpdatedAuthor ;
+            bookUpdateQuery("Author", $Author,$connection,$bookID );
+        }
+        if ($UpdatedISBN != $Isbn){
+          $Isbn= $UpdatedISBN  ;
+          bookUpdateQuery("ISBN", $Isbn,$connection,$bookID );
+        }
+        if ($UpdatedGenre != $Genre){
+          $Genre= $UpdatedGenre ;
+          bookUpdateQuery("Genre", $Genre,$connection,$bookID );
+        }
+        if ($updatedBookStatus != $status){
+          $status= $updatedBookStatus ;
+          bookUpdateQuery("Status", $status,$connection,$bookID );
+        }
+        if ($UpdatedPhone  !=   $Phonenumber){
+          $Phonenumber= $UpdatedPhone  ;
+          bookUpdateQuery("PhoneNumber", $Phonenumber,$connection,$bookID );
+        }
+        if ( $UpdatedEmail  !=   $Email){
+          $Email=  $UpdatedEmail  ;
+          bookUpdateQuery("Email", $Email,$connection,$bookID );
+        }
+        if ($UpdatedNote  != $Note && strlen(  $UpdatedNote) >= 1 ){
+          $Note= $UpdatedNote  ;
+          bookUpdateQuery("Note", $Note,$connection,$bookID );
+        }
+
+        $getbookdata = mysqli_query($connection,"Select * from  books where Book_id= '$bookID'");
+        $success_msg = "You have successfully updated the book data";
+      }
+  }
+
+  if (isset($_POST['Cancel'])){
+    header ("location:myinventory.php");}
+
 
 ?>
 
@@ -133,7 +134,7 @@ if (isset($_POST['Cancel'])){
 <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
       <div class="container-fluid">
-        <a class="navbar-brand" href="index.html">Book Xchange</a>
+        <a class="navbar-brand" href="index.php">Book Xchange</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -143,14 +144,16 @@ if (isset($_POST['Cancel'])){
               <a class="nav-link" href="index.php">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="aboutus.html">About Us</a>
+              <a class="nav-link" href="aboutus.php">About Us</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="browse.php">Browse Books</a>
             </li>
+            <?php if(logged_in()){ ?>
             <li class="nav-item">
                 <a class="nav-link" href="addbook.php">Add Book</a>
             </li>
+           <?php } ?>
             <li class="nav-item">
               <a class="nav-link" href="faq.php">FAQ</a>
             </li>
@@ -159,7 +162,6 @@ if (isset($_POST['Cancel'])){
             </li>
           </ul>
           <ul class="navbar-nav navbar-right">
-            <li><a class="nav-link">Last Login <b>March 31, 2021</b>.</a></li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false">dwarfplanet</a>
                 <ul class="dropdown-menu" aria-labelledby="dropdown04">
@@ -257,9 +259,13 @@ if (isset($_POST['Cancel'])){
     </main>
     <footer class="footer bg-dark mt-auto py-3 bg-light">
       <div class="container">
-        <p class="text-light">copyright © 2021 bookxchange.ca</p>
+        <p class="text-light">copyright © 2022 bookxchange.ca</p>
       </div>
     </footer>
     <script src="Assets/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+<?php }
+else{
+  header("location:index.php");
+} ?>
