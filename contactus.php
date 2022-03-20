@@ -16,7 +16,7 @@ require 'C:\xampp\htdocs\Web_De\vendor\phpmailer\phpmailer\src\PHPMailer.php';*/
 // Initialize PHP mailer, configure to use SMTP protocol and add credentials
 
 
-$output = '';
+$output = [];
 $responses = [];
 // Check if the form was submitted
 if (isset($_POST["submit"])){
@@ -56,16 +56,16 @@ if (isset($_POST["submit"])){
       $mail->Body = "Your Name: $name \n Your Email: $email \nYour Message: $message\n Thankyou for Contacting BookXchange!We get in touch soon.\nPls do-not-reply back";
 
         $mail->send();*/
-        $query = "INSERT INTO `contact_us` (Name, Email,Message,Date) VALUES ('$name', '$email','$message','$date')";
+        $query = "INSERT INTO `contact_us` (Name, Email,Message) VALUES ('$name', '$email','$message')";
         $result = mysqli_query($connection, $query);
-        $output = '<div class="alert alert-success">
+        $output []= '<div class="alert alert-success">
         <h5>Thankyou! for contacting us, We will get back to you soon!</h5>
         </div>';
-        echo $output;
-  }
-}
 
-  ?>
+  }
+}?>
+
+
   <html lang="en">
   <head>
     <meta charset="UTF-8">
@@ -146,9 +146,13 @@ if (isset($_POST["submit"])){
 
                   <?php if ($responses): ?>
                     <p class="responses"><?php echo implode('<br>', $responses); ?></p>
-                  <?php endif; ?>
-                </div>
+                  <?php else: ?>
+
+                  <p class="responses"><?php echo implode('<br>', $output); ?></p>
+                    <?php endif ?>
+  </div>
               </div>
+
             </fieldset>
           </form>
         </div>
