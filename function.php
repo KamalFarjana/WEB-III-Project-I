@@ -32,6 +32,13 @@ function logged_in(){
     return false;
   }
 }
+//getting the username
+function Logged_in_user_data($connection){
+  $logged_email = $_SESSION['email'];
+  $result=mysqli_query($connection,"SELECT * FROM registered_user WHERE Email='$logged_email'");
+  $row = mysqli_fetch_array($result);
+  return $row;
+}
 
 // faq
 function faq_load() {
