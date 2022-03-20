@@ -113,7 +113,7 @@ if(logged_in()){
               <a class="nav-link" href="browse.php">Browse Books</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="addbook.php">Add Book</a>
+                <a class="nav-link active" href="addbook.php">Add Book</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="faq.php">FAQ</a>
@@ -122,22 +122,16 @@ if(logged_in()){
               <a class="nav-link" href="contactus.php">Contact Us</a>
             </li>
           </ul>
-
           <ul class="navbar-nav navbar-right">
-          <?php if(logged_in()){ ?>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false">dwarfplanet</a>
                 <ul class="dropdown-menu" aria-labelledby="dropdown04">
                     <li><a class="dropdown-item" href="myprofile.php">My Profile</a></li>
                     <li><a class="dropdown-item" href="myinventory.php">My Inventory</a></li>
-                    <li><a class="dropdown-item" href="Signout.php">Sign Out</a></li>
+                    <li><a class="dropdown-item" href="signin.php">Sign Out</a></li>
                 </ul>
             </li>
-          <?php } else{ ?>
-            <li><a class="nav-link" href="signup.php">Register</a></li>
-            <li><a class="nav-link" href="signin.php">Sign In</a></li>
-          <?php } ?>
-      </ul>
+          </ul>
         </div>
       </div>
     </nav>
@@ -212,9 +206,17 @@ if(logged_in()){
 
         </div>
       </main>
+      <footer class="footer bg-dark mt-auto py-3 bg-light">
+    <div class="container">
+        <p class="text-light">copyright © 2022 bookxchange.ca</p>
+    </div>
+  </footer>
+  <script src="Assets/bootstrap.bundle.min.js"></script>
 
+
+  </body>
+  </html>
       <?php
-  require_once "footer.php";
 }else{
   header("location: index.php");
 }
