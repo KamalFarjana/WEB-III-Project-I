@@ -71,6 +71,20 @@ include("function.php");
   </nav>
 
     <main>
+    <?php if(logged_in()){ ?>
+      <div class="container py-10">
+            <img class="bd-placeholder-img" width="100%" height="100%" src="Images/book-exchange-1.jpg" style="opacity: 0.5;">
+            <hr>
+        <div class="row align-items-md-stretch">
+          <div class="col-md-12">
+            <div class="h-100 p-5 bg-light border rounded-3">
+              <h2>HOW IT WORKS?</h2>
+              <p>Check out <a href="faq.php">FAQ</a>.</p>
+            </div>
+        </div>
+      </div>
+      <br>
+    <?php } else{ ?>
       <div class="container py-4">
             <img class="bd-placeholder-img" width="100%" height="100%" src="Images/book-exchange-1.jpg" style="opacity: 0.5;">
             <hr>
@@ -90,6 +104,9 @@ include("function.php");
           </div>
         </div>
       </div>
+    <?php } ?>
+
+      
     </main>
 
     <footer class="footer bg-dark mt-auto py-3 bg-light">
