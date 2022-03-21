@@ -3,17 +3,13 @@ include("connect.php");
 include("function.php");
 $error="";
 $success_msg="";
-
 if(isset($_POST['Submit'])){
       #variable_initialization
-      $Old_Password=$_POST['Old_password'];
       $New_Password=$_POST['New_password'];
       $Confirm_NewPassword=$_POST['Confirm_new_password'];
-      $Fetiching_Old_Password=mysqli_query($connection,"SELECT Password FROM registered_user WHERE Email='" . $_SESSION['email'] . "'");
-      $RetrievedPassword=mysqli_fetch_assoc($Fetiching_Old_Password);
-      if(md5($Old_Password)==$RetrievedPassword['Password']){
-          if($New_Password==$Confirm_NewPassword){
-                  if($Old_Password!=$New_Password){
+      #$Fetiching_Old_Password=mysqli_query($connection,"SELECT Password FROM registered_user WHERE Email='" . $_SESSION['email'] . "'");
+      #$RetrievedPassword=mysqli_fetch_assoc($Fetiching_Old_Password);
+      if($New_Password==$Confirm_NewPassword){
                     if(strlen($New_Password)>7){
                         $new_hashed_password=md5($New_Password);
                         mysqli_query($connection," UPDATE registered_user SET Password='$new_hashed_password' WHERE Email='" . $_SESSION['email'] . "'");
@@ -24,21 +20,12 @@ if(isset($_POST['Submit'])){
                    else{
                      $error="Password length minimum is: 7";
                    }
-                  }
-                  else{
-                      $error="Seems like you have entered your old password";
-                  }
-            }
-            else{
-              $error="New password doesnot match";
-
-            }
-
       }
       else{
-              $error="You have entered an incorrect current password";
-              }
-        }
+              $error="New password doesnot match";
+
+      }
+}
 ?>
 
 <!DOCTYPE html>
@@ -101,10 +88,6 @@ if(isset($_POST['Submit'])){
           <img class="mb-4" src="Images/swap.png" alt="" width="72" height="72">
           <h1 class="h3 mb-3 fw-normal">Reset password?</h1>
 
-          <div class="form-floating">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="Old_password">
-            <label for="floatingPassword">Old Password</label>
-          </div>
           <div class="form-floating">
             <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="New_password">
             <label for="floatingPassword">New Password</label>
