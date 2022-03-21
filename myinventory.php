@@ -21,15 +21,18 @@ $result_for_active = mysqli_query($connection, "select * from books where status
 $result_for_inactive = mysqli_query($connection, "select * from books where status=0 and User_Id = '$user_id' ");
 // print_r($result);
 
-if(!$result_for_active){
-  $error_loading_active= "No active books";
-}
-else if(!$result_for_inactive < 1){
-  $error_loading_inactive = "No inactive books";
-}
-else{
-  $success_msg;
-}
+  if (mysqli_num_rows($result_for_active)==0){
+    $error_loading_active = "No active books";
+  }else{
+    $success_msg;
+  }
+  
+  if (mysqli_num_rows($result_for_inactive)==0){
+    $error_loading_inactive = "No inactive books";
+  }else{
+    $success_msg;
+  }
+
 if(logged_in()){
 ?>
 
