@@ -1,9 +1,10 @@
-Web Design Development III - Project I
+# Web Design Development III - Project I
 
-by
+### Book Xchange
+> Exchanging books save you time, money, shelf space, and environment!
 
-FARJANA BINTAY KAMAL
-JENISH RANK
-Iresha samarakoon
-GAURI ASOK KUMAR SINDHU ASOK
-QUAN BUI
+- FARJANA BINTAY KAMAL
+- JENISH RANK
+- IRESHA SAMARAKOON
+- GAURI ASOK KUMAR SINDHU ASOK
+- QUAN BUI
