@@ -109,7 +109,7 @@ if(isset($_POST['Submit'])&& $_POST['g-recaptcha-response']){
               <a class="nav-link belowformlink" href="signup.php">Sign Up</a>
               <br><br>
 
-              <a class="nav-link belowformlink" href="forgotpassword.php">Forgot password?</a></p>
+              <!--<a class="nav-link belowformlink" href="forgotpassword.php">Forgot password?</a></p> -->
           </div>
         </form>
       </main>

@@ -3,31 +3,36 @@ include("connect.php");
 include("function.php");
 $error="";
 $success_msg="";
-if(isset($_POST['Submit'])){
-      #variable_initialization
-      $New_Password=$_POST['New_password'];
-      $Confirm_NewPassword=$_POST['Confirm_new_password'];
-      #$Fetiching_Old_Password=mysqli_query($connection,"SELECT Password FROM registered_user WHERE Email='" . $_SESSION['email'] . "'");
-      #$RetrievedPassword=mysqli_fetch_assoc($Fetiching_Old_Password);
-      if($New_Password==$Confirm_NewPassword){
-                    if(strlen($New_Password)>7){
-                        $new_hashed_password=md5($New_Password);
-                        mysqli_query($connection," UPDATE registered_user SET Password='$new_hashed_password' WHERE Email='" . $_SESSION['email'] . "'");
-                      #closing the session as email is saved to session email
-                        include("Signout.php");
-                        echo ("<script LANGUAGE='JavaScript'>window.alert('Succesfully Updated');window.location.href='signin.php';</script>");
-                    }
-                   else{
-                     $error="Password length minimum is: 7";
-                   }
-      }
-      else{
-              $error="New password doesnot match";
+if(logged_in()){
+      if(isset($_POST['Submit'])){
+            #variable_initialization
+            $New_Password=$_POST['New_password'];
+            $Confirm_NewPassword=$_POST['Confirm_new_password'];
+            #$Fetiching_Old_Password=mysqli_query($connection,"SELECT Password FROM registered_user WHERE Email='" . $_SESSION['email'] . "'");
+            #$RetrievedPassword=mysqli_fetch_assoc($Fetiching_Old_Password);
+            if(strlen($New_Password)>=7){
+                  if($New_Password==$Confirm_NewPassword){
+                              $new_hashed_password=md5($New_Password);
+                              if(mysqli_query($connection," UPDATE registered_user SET Password='$new_hashed_password' WHERE Email='" . $_SESSION['email'] . "'")){
+                                include("Signout.php");
+                                #echo ("<script LANGUAGE='JavaScript'>window.alert('Succesfully Updated');window.location.href='signin.php';</script>");
+                                $success_msg="Success";
+                              }
+                              else{
+                                $error="failed";
+                              }
+                             #closing the session as email is saved to session email
 
+                          }
+                         else{
+                            $error="New password doesnot match";
+                         }
+            }
+            else{
+               $error="Password length minimum is: 7";
+            }
       }
-}
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,6 +46,7 @@ if(isset($_POST['Submit'])){
     <title>Forgot Password? | Book Xchange</title>
 </head>
 <body>
+
     <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
       <div class="container-fluid">
         <a class="navbar-brand" href="index.php">Book Xchange</a>
@@ -49,36 +55,34 @@ if(isset($_POST['Submit'])){
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav me-auto mb-2 mb-md-0">
+
             <li class="nav-item">
-              <a class="nav-link" href="index.php">Home</a>
+              <a class="nav-link" href="index.php ">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="aboutus.html">About Us</a>
+              <a class="nav-link" href="aboutus.php ">About Us</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="browse.html">Browse Books</a>
+              <a class="nav-link" href="browse.php ">Browse Books</a>
             </li>
-            <?php if(logged_in()){ ?>
+
             <li class="nav-item">
-                <a class="nav-link" href="addbook.php">Add Book</a>
-            </li>
-           <?php } ?>
-            <li class="nav-item">
-              <a class="nav-link" href="faq.php">FAQ</a>
+              <a class="nav-link" href="faq.php ">FAQ</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="contactus.php">Contact Us</a>
+              <a class="nav-link" href="contactus.php ">Contact Us</a>
             </li>
 
           </ul>
           <ul class="nav-item navbar-nav navbar-right">
-            <li><a class="nav-link active" href="signup.php">Register</a></li>
+            <li><a class="nav-link active" href="signup.php ">Register</a></li>
             <li><a class="nav-link active" href="signin.php">Sign In</a></li>
           </ul>
+
         </div>
       </div>
     </nav>
-    <?php if(logged_in()){ ?>
+
     <main class="form-signin text-center">
       <?php
           if(strlen($error)>0){ ?>
@@ -103,20 +107,10 @@ if(isset($_POST['Submit'])){
           </div>
 
 
-          <div class="nav-item navbar-nav">
-          <p class="mt-5 mb-3">Not registered yet?
-              <a class="nav-link belowformlink" href="signup.php">Sign Up</a>
-              <br><br>
-              <a class="nav-link belowformlink" href="signin.php">Sign In</a>  |
-              <a class="nav-link belowformlink" href="forgotpassword.php">Change Email</a></p>
-          </div>
         </form>
       </main>
 
-  <?php } else {
-      echo ("<script LANGUAGE='JavaScript'>window.alert('Login to your account');window.location.href='signin.php';</script>");
-  }
-  ?>
+
   <footer class="footer bg-dark mt-auto py-3 bg-light fixed-bottom">
     <div class="container">
         <p class="text-light">copyright © 2021 bookxchange.ca</p>
@@ -125,3 +119,8 @@ if(isset($_POST['Submit'])){
 <script src="Assets/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+<?php
+} else {
+    echo ("<script LANGUAGE='JavaScript'>window.alert('Login to your account');window.location.href='signin.php';</script>");
+}
+?>
